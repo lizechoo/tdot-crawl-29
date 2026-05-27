@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+<meta name="theme-color" content="#1a1a1a" />
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex" />
+<meta name="googlebot" content="noindex,nofollow" />
+<meta name="referrer" content="no-referrer" />
+<title>29 · Birthday Freebie Crawl · Downtown Toronto · June 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4ECDE;
+    --paper-2:#EADFC9;
+    --ink:#141414;
+    --ink-2:#3A332B;
+    --ink-soft:#7A6F62;
+    --rule:#1A1A1A;
+    --cherry:#D43A2F;
+    --cherry-deep:#9C211A;
+    --gold:#C99845;
+    --mint:#3F7A5E;
+    --skip:#9A9389;
+    --paper-shadow: 0 1px 0 rgba(20,20,20,.05), 0 12px 32px -16px rgba(20,20,20,.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif;
+    font-size:16px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(circle at 12% 18%, rgba(212,58,47,.06), transparent 35%),
+      radial-gradient(circle at 88% 70%, rgba(201,152,69,.08), transparent 40%),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.07  0 0 0 0 0.06  0 0 0 0 0.05  0 0 0 .055 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    min-height:100vh;
+  }
+  ::selection{background:var(--cherry);color:var(--paper)}
+
+  /* ── HERO ─────────────────────────── */
+  .hero{
+    position:relative;
+    padding:48px 28px 40px;
+    border-bottom:2px solid var(--ink);
+    overflow:hidden;
+  }
+  .hero-top{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-2);
+    margin-bottom:42px;
+  }
+  .hero-top span{display:block}
+  .stamp{
+    border:1.5px solid var(--cherry);color:var(--cherry);
+    padding:5px 10px;border-radius:2px;
+    transform:rotate(-3deg);
+    font-weight:500;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr);
+    gap:24px;align-items:end;
+  }
+  @media (max-width:760px){.hero-grid{grid-template-columns:1fr;gap:8px}}
+  .twentynine{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 144,"SOFT" 100,"wght" 400;
+    font-style:italic;
+    font-size:clamp(180px,32vw,320px);
+    line-height:.78;letter-spacing:-.06em;color:var(--ink);
+    position:relative;
+    text-shadow: 4px 4px 0 var(--cherry);
+  }
+  .twentynine::after{
+    content:"";position:absolute;
+    right:6%;top:14%;width:28px;height:28px;
+    background:var(--cherry);border-radius:50%;
+    box-shadow:0 0 0 6px var(--paper),0 0 0 8px var(--cherry);
+  }
+  .hero-text{padding-bottom:8px}
+  .hero-text h1{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 144,"wght" 700;
+    font-size:clamp(36px,4.6vw,58px);
+    line-height:.95;letter-spacing:-.025em;
+    margin-bottom:18px;
+  }
+  .hero-text h1 em{
+    font-style:italic;color:var(--cherry);
+    font-variation-settings:"opsz" 144,"wght" 500,"SOFT" 80;
+  }
+  .meta-row{
+    display:flex;flex-wrap:wrap;gap:14px 22px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;color:var(--ink-2);
+    letter-spacing:.08em;text-transform:uppercase;
+    border-top:1px solid var(--ink);padding-top:14px;margin-top:14px;
+  }
+  .meta-row b{color:var(--cherry);font-weight:700}
+
+  /* ── COUNTDOWN ─────────────────────── */
+  .countdown-bar{
+    background:var(--ink);color:var(--paper);
+    padding:14px 28px;
+    display:flex;flex-wrap:wrap;gap:22px;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;letter-spacing:.06em;
+    position:sticky;top:0;z-index:50;
+    border-bottom:1px solid var(--gold);
+  }
+  .countdown-bar strong{color:var(--cherry)}
+  .countdown-grid{display:flex;gap:18px;flex-wrap:wrap}
+  .cd-block{display:flex;flex-direction:column;gap:2px;line-height:1}
+  .cd-label{font-size:9px;letter-spacing:.2em;opacity:.65;text-transform:uppercase}
+  .cd-val{font-size:18px;font-weight:600}
+  .cd-val.urgent{color:var(--cherry)}
+
+  /* ── TABS ──────────────────────────── */
+  .tabs{
+    display:flex;gap:0;border-bottom:2px solid var(--ink);
+    background:var(--paper);
+    position:sticky;top:52px;z-index:40;
+    overflow-x:auto;
+  }
+  .tab{
+    flex:1;min-width:120px;
+    padding:18px 12px;
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 14,"wght" 600;
+    font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+    background:none;border:0;border-right:1px solid var(--ink);
+    color:var(--ink);cursor:pointer;
+    transition:.18s background;
+    white-space:nowrap;
+  }
+  .tab:last-child{border-right:0}
+  .tab .num{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--cherry);margin-right:6px;letter-spacing:.05em;
+  }
+  .tab:hover{background:var(--paper-2)}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+  .tab[aria-selected="true"] .num{color:var(--gold)}
+
+  section.panel{padding:40px 28px 80px;max-width:1280px;margin:0 auto;display:none}
+  section.panel.active{display:block;animation:fadeUp .5s ease both}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+  /* ── PANEL HEADERS ────────────────── */
+  .panel-header{
+    display:flex;align-items:baseline;gap:14px;
+    border-bottom:1.5px solid var(--ink);
+    padding-bottom:14px;margin-bottom:30px;
+    flex-wrap:wrap;
+  }
+  .panel-header .idx{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.18em;color:var(--cherry);
+  }
+  .panel-header h2{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 144,"wght" 700;
+    font-size:clamp(34px,5vw,54px);letter-spacing:-.025em;line-height:1;
+  }
+  .panel-header h2 em{font-style:italic;color:var(--cherry);font-variation-settings:"opsz" 144,"wght" 500}
+  .panel-header p{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:18px;color:var(--ink-2);max-width:520px;margin-left:auto;
+  }
+
+  /* ── DO NOW LIST ──────────────────── */
+  .progress-shell{
+    border:1.5px solid var(--ink);
+    background:var(--paper-2);
+    padding:18px 22px;margin-bottom:30px;
+    display:flex;gap:24px;align-items:center;flex-wrap:wrap;
+  }
+  .progress-bar{
+    flex:1;min-width:180px;height:10px;border:1px solid var(--ink);
+    position:relative;background:var(--paper);
+  }
+  .progress-fill{height:100%;background:var(--cherry);width:0%;transition:width .4s}
+  .progress-shell .stats{
+    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;
+  }
+  .progress-shell .stats b{color:var(--cherry);font-size:18px}
+
+  .donow-list{display:grid;gap:14px}
+  .donow{
+    display:grid;
+    grid-template-columns: 36px 1fr auto;
+    gap:14px;align-items:start;
+    background:var(--paper);
+    border:1.5px solid var(--ink);
+    padding:18px 20px;
+    cursor:pointer;
+    position:relative;
+    transition:.18s transform,.18s box-shadow;
+  }
+  .donow:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+  .donow.done{background:var(--paper-2)}
+  .donow.done .donow-title{text-decoration:line-through;color:var(--ink-soft)}
+  .donow.done::before{
+    content:"DONE";position:absolute;top:8px;right:8px;
+    font-family:'JetBrains Mono',monospace;font-size:9px;
+    background:var(--mint);color:var(--paper);padding:2px 6px;letter-spacing:.1em;
+  }
+  .check{
+    width:28px;height:28px;border:1.5px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    background:var(--paper);font-size:18px;line-height:1;
+    transition:.18s;
+  }
+  .donow.done .check{background:var(--cherry);color:var(--paper);border-color:var(--cherry)}
+  .donow-title{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 36,"wght" 600;
+    font-size:19px;line-height:1.2;letter-spacing:-.01em;
+  }
+  .donow-sub{
+    font-size:13px;color:var(--ink-2);margin-top:4px;line-height:1.45;
+  }
+  .donow-meta{
+    text-align:right;font-family:'JetBrains Mono',monospace;
+    font-size:11px;letter-spacing:.08em;color:var(--ink-2);
+    text-transform:uppercase;line-height:1.4;white-space:nowrap;
+  }
+  .donow-meta .deadline{color:var(--cherry);font-weight:700}
+  .donow-meta a{
+    color:var(--ink);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-thickness:1px;
+  }
+  .donow-meta a:hover{color:var(--cherry)}
+
+  /* ── DAY OF STOPS ─────────────────── */
+  .timeline{
+    display:grid;gap:22px;
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+  }
+  .filter-row{
+    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;
+  }
+  .chip{
+    border:1.5px solid var(--ink);background:var(--paper);
+    padding:6px 12px;cursor:pointer;text-transform:uppercase;
+    transition:.18s;
+  }
+  .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+  .stop{
+    border:1.5px solid var(--ink);
+    background:var(--paper);
+    padding:0;
+    position:relative;
+    transition:.18s transform,.22s box-shadow;
+    display:flex;flex-direction:column;
+  }
+  .stop:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
+  .stop.redeemed{background:#EBE2D0}
+  .stop.redeemed .stop-name{text-decoration:line-through;color:var(--ink-soft)}
+  .stop-top{
+    padding:14px 18px 10px;
+    border-bottom:1px dashed var(--ink);
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+  }
+  .stop-time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;font-weight:600;letter-spacing:.06em;
+  }
+  .tier{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px;letter-spacing:.18em;padding:3px 8px;
+    text-transform:uppercase;font-weight:700;
+  }
+  .tier.must{background:var(--cherry);color:var(--paper)}
+  .tier.maybe{background:var(--gold);color:var(--ink)}
+  .tier.recruit{background:var(--mint);color:var(--paper)}
+  .tier.dinner{background:var(--ink);color:var(--paper)}
+  .stop-body{padding:16px 18px 14px;flex:1;display:flex;flex-direction:column;gap:8px}
+  .stop-name{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 60,"wght" 700;
+    font-size:26px;line-height:1.05;letter-spacing:-.02em;
+  }
+  .stop-freebie{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:18px;color:var(--cherry-deep);line-height:1.3;
+  }
+  .stop-addr{
+    font-size:13px;color:var(--ink-2);line-height:1.45;
+  }
+  .stop-addr a{
+    color:var(--ink);font-weight:600;text-decoration:underline;
+    text-underline-offset:3px;text-decoration-thickness:1px;
+  }
+  .stop-addr a:hover{color:var(--cherry)}
+  .stop-tc{
+    font-size:12.5px;line-height:1.55;color:var(--ink-2);
+    border-top:1px solid var(--ink);padding-top:10px;margin-top:6px;
+  }
+  .stop-tc b{color:var(--ink)}
+  .stop-tc ul{padding-left:16px;margin-top:4px}
+  .stop-tc li{margin-bottom:3px}
+  .stop-foot{
+    border-top:1.5px solid var(--ink);
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.08em;text-transform:uppercase;
+  }
+  .worth{display:flex;gap:2px}
+  .worth span{
+    display:inline-block;width:10px;height:10px;border-radius:50%;
+    background:var(--paper-2);border:1px solid var(--ink);
+  }
+  .worth span.on{background:var(--cherry);border-color:var(--cherry)}
+  .redeem-btn{
+    background:none;border:1px solid var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+    padding:5px 9px;cursor:pointer;text-transform:uppercase;
+    transition:.18s;
+  }
+  .redeem-btn:hover{background:var(--ink);color:var(--paper)}
+  .stop.redeemed .redeem-btn{background:var(--cherry);color:var(--paper);border-color:var(--cherry)}
+
+  /* ── MAP / CLUSTERS ──────────────── */
+  .clusters{
+    display:grid;gap:20px;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  }
+  .cluster{
+    border:1.5px solid var(--ink);
+    padding:20px 22px;
+    background:var(--paper);
+    position:relative;
+  }
+  .cluster::before{
+    content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:6px;
+    background:repeating-linear-gradient(90deg,var(--ink) 0 12px,transparent 12px 18px);
+  }
+  .cluster h3{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 60,"wght" 700;
+    font-size:22px;letter-spacing:-.02em;line-height:1;margin-top:8px;
+  }
+  .cluster h3 em{font-style:italic;color:var(--cherry);font-variation-settings:"opsz" 60,"wght" 500}
+  .cluster-time{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    letter-spacing:.18em;color:var(--ink-2);
+    margin-top:6px;text-transform:uppercase;
+  }
+  .cluster ul{list-style:none;margin-top:14px;border-top:1px solid var(--ink)}
+  .cluster li{
+    padding:9px 0;border-bottom:1px dotted var(--ink-soft);
+    display:flex;justify-content:space-between;gap:10px;
+    font-size:13.5px;align-items:baseline;
+  }
+  .cluster li:last-child{border-bottom:0}
+  .cluster li b{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
+  .cluster li span{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--ink-2);letter-spacing:.06em;
+  }
+
+  /* ── SKIPPED ──────────────────────── */
+  .skip-list{display:grid;gap:10px}
+  .skip-row{
+    display:grid;
+    grid-template-columns:minmax(140px,200px) 1fr auto;
+    gap:18px;align-items:baseline;
+    padding:13px 18px;border:1px solid var(--skip);
+    background:rgba(154,147,137,.08);
+    font-size:14px;
+  }
+  .skip-row b{
+    font-family:'Fraunces',serif;font-weight:600;font-size:17px;
+    color:var(--ink-soft);text-decoration:line-through;
+    text-decoration-thickness:1.5px;
+  }
+  .skip-row span{color:var(--ink-2);line-height:1.4}
+  .skip-row em{
+    font-family:'JetBrains Mono',monospace;font-style:normal;font-size:10px;
+    letter-spacing:.1em;color:var(--skip);text-transform:uppercase;
+  }
+
+  /* ── FOOTER ───────────────────────── */
+  footer{
+    border-top:2px solid var(--ink);
+    padding:32px 28px 60px;text-align:center;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+    color:var(--ink-2);text-transform:uppercase;
+  }
+  footer em{font-style:normal;color:var(--cherry)}
+
+  /* tally box */
+  .tally{
+    background:var(--ink);color:var(--paper);
+    padding:22px 26px;margin-top:30px;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;
+  }
+  .tally div{display:flex;flex-direction:column;gap:6px}
+  .tally span{
+    font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--gold);letter-spacing:.18em;text-transform:uppercase;
+  }
+  .tally b{
+    font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 144,"wght" 600;
+    font-size:34px;line-height:1;letter-spacing:-.02em;
+  }
+  .tally b em{font-style:italic;color:var(--cherry)}
+
+  /* mobile tweaks */
+  @media (max-width:640px){
+    .hero{padding:32px 20px 28px}
+    section.panel{padding:28px 20px 60px}
+    .countdown-bar{padding:12px 20px;font-size:11px}
+    .cd-val{font-size:15px}
+    .tab{font-size:12px;padding:14px 8px;min-width:90px}
+    .panel-header p{margin-left:0}
+    .donow{grid-template-columns: 28px 1fr;}
+    .donow-meta{grid-column:1/-1;text-align:left;margin-left:42px;border-top:1px dashed var(--ink);padding-top:8px}
+    .skip-row{grid-template-columns:1fr;gap:4px}
+    .skip-row em{justify-self:start}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-top">
+    <span>The Ultimate Birthday<br/>Freebie Crawl Field Guide</span>
+    <span class="stamp">EDITION · ‘26</span>
+    <span style="text-align:right">Toronto, ON<br/>43.6532° N · 79.3832° W</span>
+  </div>
+  <div class="hero-grid">
+    <div class="twentynine">29</div>
+    <div class="hero-text">
+      <h1>One <em>year</em> older.<br/>Eleven <em>walks</em> of free food.</h1>
+      <div class="meta-row">
+        <span><b>SUN</b> · JUN 07 · 2026</span>
+        <span>Downtown Toronto</span>
+        <span>+1 (girlfriend)</span>
+        <span><b>9</b> stops confirmed</span>
+        <span>1 recruit-required jackpot</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="countdown-bar">
+  <div class="countdown-grid">
+    <div class="cd-block">
+      <span class="cd-label">Signup cutoff (May 31)</span>
+      <span class="cd-val urgent" id="cd-signup">—</span>
+    </div>
+    <div class="cd-block">
+      <span class="cd-label">Crawl day (Jun 07)</span>
+      <span class="cd-val" id="cd-crawl">—</span>
+    </div>
+  </div>
+  <div><strong id="todo-counter">0 / 11</strong> · sign-ups complete</div>
+</div>
+
+<nav class="tabs" role="tablist">
+  <button class="tab" role="tab" aria-selected="true"  data-target="do-now"><span class="num">01</span>Do now</button>
+  <button class="tab" role="tab" aria-selected="false" data-target="day-of"><span class="num">02</span>June 7 plan</button>
+  <button class="tab" role="tab" aria-selected="false" data-target="map"><span class="num">03</span>Route map</button>
+  <button class="tab" role="tab" aria-selected="false" data-target="skipped"><span class="num">04</span>Skipped</button>
+</nav>
+
+<!-- ──────────────── DO NOW ──────────────── -->
+<section class="panel active" id="do-now">
+  <div class="panel-header">
+    <span class="idx">— 01 / Pre-flight checklist</span>
+    <h2>Do <em>today</em>.</h2>
+    <p>Most birthday programs gate redemption on advance signup. May 31 is the hard floor for the 7-day-rule chains. Tap a row to mark it done — progress saves to this device.</p>
+  </div>
+
+  <div class="progress-shell">
+    <div class="stats"><b id="pct">0%</b> COMPLETE · <span id="todo-count2">0 of 11</span></div>
+    <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
+    <div class="stats">RESET <a href="#" id="reset-btn" style="color:var(--cherry);text-decoration:underline">↻</a></div>
+  </div>
+
+  <div class="donow-list" id="donow-list">
+    <!-- injected -->
+  </div>
+</section>
+
+<!-- ──────────────── DAY OF ──────────────── -->
+<section class="panel" id="day-of">
+  <div class="panel-header">
+    <span class="idx">— 02 / The crawl, hour by hour</span>
+    <h2>June <em>seventh</em>.</h2>
+    <p>Eleven stops, north-to-south down Yonge, west to Chinatown, dinner downtown. Tap the address for Google Maps. Tap REDEEM when you’ve cashed the freebie.</p>
+  </div>
+
+  <div class="filter-row">
+    <button class="chip" aria-pressed="true" data-filter="all">All stops</button>
+    <button class="chip" aria-pressed="false" data-filter="must">Must</button>
+    <button class="chip" aria-pressed="false" data-filter="maybe">Maybe</button>
+    <button class="chip" aria-pressed="false" data-filter="recruit">Recruit</button>
+    <button class="chip" aria-pressed="false" data-filter="dinner">Dinner</button>
+  </div>
+
+  <div class="timeline" id="timeline"><!-- injected --></div>
+
+  <div class="tally">
+    <div><span>Free retail value</span><b>~<em>$130–160</em></b></div>
+    <div><span>Skincare alone</span><b>~$75</b></div>
+    <div><span>Stops</span><b>9 + 1</b></div>
+    <div><span>You spend</span><b>~$15<small style="font-size:.4em;letter-spacing:.1em">+keg dinner</small></b></div>
+  </div>
+</section>
+
+<!-- ──────────────── MAP ──────────────── -->
+<section class="panel" id="map">
+  <div class="panel-header">
+    <span class="idx">— 03 / Geographic clusters</span>
+    <h2>The <em>route</em>.</h2>
+    <p>Walkable spine: Yonge from Bloor to Front, with one streetcar hop west to Chinatown. Bring transit, comfy shoes, an empty stomach.</p>
+  </div>
+  <div class="clusters" id="clusters"></div>
+</section>
+
+<!-- ──────────────── SKIPPED ──────────────── -->
+<section class="panel" id="skipped">
+  <div class="panel-header">
+    <span class="idx">— 04 / Dead pool</span>
+    <h2>Not <em>worth it</em>.</h2>
+    <p>Vendors we audited and cut. Saved you the wasted trip — most are either closed, suburban, missed-window, or carry a paying-guest minimum that breaks a 2-person crawl.</p>
+  </div>
+  <div class="skip-list" id="skip-list"></div>
+</section>
+
+<footer>
+  Field-tested by 3 Sonnet agents via CloakBrowser · for one <em>birthday</em> · downtown Toronto · sun. june 7 2026
+</footer>
+
+<script>
+/* ───────── Data ───────── */
+const DO_NOW = [
+  {id:'chatime', t:'Download Societea (Chatime) + register bday + buy 1 drink', s:'7-day advance + qualifying purchase. Double-cap on signup AND prior purchase.', deadline:'May 31', link:'https://chatime.ca/rewards/'},
+  {id:'tenrens', t:'Ten Ren\'s Tea loyalty signup', s:'7-day advance rule. 454 Dundas St W (Chinatown).', deadline:'May 31', link:'https://tenrenstea.com/'},
+  {id:'sephora', t:'Sephora Beauty Insider signup', s:'Pick Dr. Dennis Gross Skin Spa Trio at the counter on June 7. ~$50 skincare value.', deadline:'Jun 01', link:'https://www.sephora.com/BeautyInsider'},
+  {id:'kiehls', t:'Kiehl\'s Rewards signup + plan small purchase', s:'Free Lip Balm #1 + skincare deluxe. New members need 1 small purchase ($15-20) during bday month to unlock.', deadline:'Jun 06', link:'https://www.kiehls.ca/en/my-kiehls-rewards.html'},
+  {id:'jollibee', t:'Download Jollibee Rewards app + add bday', s:'No hard cutoff but do it now to be safe. Free peach mango pie.', deadline:'Jun 06', link:'https://www.jollibeefoods.com/rewards'},
+  {id:'parisbaguette', t:'Paris Baguette CANADA app + 1 purchase', s:'NOT the US app — make sure it\'s the Canadian one. Needs 1 prior purchase before June 7.', deadline:'Jun 06', link:'https://parisbaguette.com/rewards/'},
+  {id:'alley', t:'The Alley app + buy 1 drink', s:'Needs 1 qualifying prior purchase. 5-day redemption window.', deadline:'Jun 06', link:'https://www.the-alley.ca/'},
+  {id:'tororo', t:'Toro Toro Rewards (TapMango) signup', s:'Locks redemption window June 1–14. 8-pc maki roll free, no group minimum.', deadline:'Jun 01', link:'https://www.torotoro.ca/'},
+  {id:'congcaphe', t:'Cong Caphe signup + DM 3 Elm St to confirm', s:'Stars loyalty is Bloor only per T&Cs — verify 3 Elm honours the bday drink before counting on it.', deadline:'Jun 01', link:'https://congcaphe.com/'},
+  {id:'monga', t:'Monga signup + call 692 Yonge', s:'Phone (647) 341-8838. April 2026 reports say bday offer may be discontinued at DT — confirm before walking in.', deadline:'Jun 06', link:'https://mongacanada.com/'},
+  {id:'keg', t:'Keg dinner reservation Sun Jun 7', s:'No signup needed for Billy Miner Pie — just tell server. But Sun dinner books up fast.', deadline:'Book now', link:'https://thekeg.com/en/locations'}
+];
+
+const STOPS = [
+  {time:'10:30',name:'Paris Baguette',freebie:'Free cake slice',addr:'110 Bloor St W (Bay/Bloor)',maps:'https://maps.google.com/?q=Paris+Baguette+110+Bloor+W+Toronto',tier:'must',worth:4,
+   tc:['<b>Signup:</b> Paris Baguette <b>Canada</b> app (not US)','<b>Pre-req:</b> 1 prior purchase before redemption','<b>Window:</b> full birthday month','<b>Redeem:</b> in-app coupon at counter']},
+  {time:'11:00',name:'Toro Toro Sushi',freebie:'Free 8-piece maki roll',addr:'675 Yonge St (Yonge/Bloor)',maps:'https://maps.google.com/?q=Toro+Toro+Sushi+675+Yonge+Toronto',tier:'must',worth:5,
+   tc:['<b>Signup:</b> Toro Toro Rewards (TapMango)','<b>Window:</b> June 1–14','<b>No</b> group minimum (works for 2)','<b>Bring:</b> ID, TapMango account','<b>Dine-in</b>']},
+  {time:'11:45',name:'Monga Fried Chicken',freebie:'Free Baoger',addr:'692 Yonge St',maps:'https://maps.google.com/?q=Monga+Fried+Chicken+692+Yonge+Toronto',tier:'maybe',worth:3,
+   tc:['<b>Signup:</b> mongacanada.com rewards','<b>⚠️ Verify:</b> call 647-341-8838 — April 2026 reports say offer may be discontinued at DT','If dead, skip — walk south to Eaton Centre']},
+  {time:'12:45',name:'Kiehl\'s',freebie:'Free Lip Balm #1 + skincare sample',addr:'220 Yonge St Unit 3116A · CF Eaton Centre',maps:'https://maps.google.com/?q=Kiehls+Eaton+Centre+Toronto',tier:'must',worth:4,
+   tc:['<b>Signup:</b> My Kiehl\'s Rewards','<b>Catch:</b> new members need 1 small purchase ($15-20) during bday month','<b>Gift:</b> full-size Lip Balm #1 + deluxe sample (Midnight Recovery / Ultra Facial Cream)','100% skincare, no makeup']},
+  {time:'13:15',name:'Sephora',freebie:'Dr. Dennis Gross Skin Spa Trio',addr:'220 Yonge St · CF Eaton Centre',maps:'https://maps.google.com/?q=Sephora+Eaton+Centre+Toronto',tier:'must',worth:5,
+   tc:['<b>Signup:</b> Beauty Insider (free)','<b>No purchase required</b>','<b>2026 picks (skincare):</b> Dr. Dennis Gross Trio (~$50) or Tower 28 Duo','<b>Skip:</b> Dae haircare, Glossier fragrance options']},
+  {time:'13:45',name:'Jollibee',freebie:'Free peach mango pie',addr:'334 Yonge St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Jollibee+334+Yonge+Toronto',tier:'must',worth:4,
+   tc:['<b>Signup:</b> Jollibee Rewards app','<b>No purchase req</b>','<b>Confirmed:</b> 334 Yonge St location','Snack only — save room']},
+  {time:'14:15',name:'Cong Caphe',freebie:'Free Vietnamese coconut coffee',addr:'3 Elm St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Cong+Caphe+3+Elm+St+Toronto',tier:'maybe',worth:3,
+   tc:['<b>Signup:</b> congcaphe.ca','<b>⚠️ Catch:</b> Stars loyalty is Bloor St only per T&Cs','<b>Verify:</b> DM @congcaphe.ca to confirm 3 Elm honours bday drink','Great photo vibe if it works']},
+  {time:'15:00',name:'Ten Ren\'s Tea',freebie:'Free drink + 1 topping',addr:'454 Dundas St W (Chinatown, Spadina/Dundas)',maps:'https://maps.google.com/?q=Ten+Rens+Tea+454+Dundas+W+Toronto',tier:'must',worth:4,
+   tc:['<b>Signup:</b> Ten Ren\'s loyalty','<b>Window:</b> bday day only','<b>Any size + 1 topping</b>','<b>Bring:</b> ID']},
+  {time:'15:30',name:'The Alley',freebie:'Free bubble tea',addr:'120 Adelaide St W (also: 5 St Joseph, 65 Front W)',maps:'https://maps.google.com/?q=The+Alley+120+Adelaide+W+Toronto',tier:'must',worth:4,
+   tc:['<b>Signup:</b> The Alley CA app (Nōwn-powered)','<b>Pre-req:</b> 1 prior purchase','<b>Window:</b> 5-day redemption','Pick closest of 3 DT locations']},
+  {time:'16:15',name:'Chatime',freebie:'Free drink',addr:'Multiple DT (use Societea app finder)',maps:'https://maps.google.com/?q=Chatime+downtown+Toronto',tier:'must',worth:3,
+   tc:['<b>Signup:</b> Societea app','<b>Pre-req:</b> 1 qualifying purchase','<b>Window:</b> 7-day around bday','⚠️ Saturation tax — 4th boba of day. Skip if too full.']},
+  {time:'17:00',name:'Ikkousha — 29 GYOZA',freebie:'29 free gyoza (count = age)',addr:'249 Queen St W · or 374A Yonge St',maps:'https://maps.google.com/?q=Ikkousha+Ramen+Queen+West+Toronto',tier:'recruit',worth:5,
+   tc:['<b>⚠️ RECRUIT 2 FRIENDS</b> — needs 4 paying ramen orders','<b>Never repeats:</b> count = your age, only this year','<b>Dine-in</b> + ID required','Single best freebie of the entire list']},
+  {time:'19:00',name:'The Keg · dinner',freebie:'Billy Miner Pie (free dessert)',addr:'35 The Esplanade · or 165 York St',maps:'https://maps.google.com/?q=The+Keg+Esplanade+Toronto',tier:'dinner',worth:5,
+   tc:['<b>No signup required</b> — just tell server it\'s your bday','<b>Paid dinner</b> (~$70-100pp)','<b>Reservation strongly recommended</b> for Sunday','Birthday date-night anchor']}
+];
+
+const CLUSTERS = [
+  {name:'Yonge / <em>Bloor</em>', time:'10:30 – 12:30',
+   stops:[['Paris Baguette','110 Bloor W'],['Toro Toro Sushi','675 Yonge'],['Monga F. Chicken','692 Yonge']]},
+  {name:'Eaton <em>Centre</em>', time:'12:45 – 13:45',
+   stops:[['Kiehl\'s','220 Yonge u.3116A'],['Sephora','220 Yonge'],['Jollibee','334 Yonge']]},
+  {name:'Yonge / <em>Dundas</em>', time:'14:00 – 14:30',
+   stops:[['Cong Caphe','3 Elm St']]},
+  {name:'Chinatown / <em>Queen W</em>', time:'15:00 – 17:30',
+   stops:[['Ten Ren\'s Tea','454 Dundas W'],['The Alley','120 Adelaide W'],['Chatime','Multiple DT'],['Ikkousha (recruit)','249 Queen W']]},
+  {name:'Financial / <em>Esplanade</em>', time:'19:00 – late',
+   stops:[['The Keg dinner','35 Esplanade / 165 York']]}
+];
+
+const SKIP = [
+  ['Flame Sushi','6-person minimum','UNFEASIBLE'],
+  ['Mandarin Restaurant','DT location closed Jan 2026 + 3 adult min','CLOSED'],
+  ['CopaCabana','230 Adelaide closed Apr 2026, 4-person min uptown','CLOSED'],
+  ['Gourmet Tribe','Markham only (40 min from DT)','SUBURBAN'],
+  ['Big Mama\'s & Papa\'s','No Toronto — Milton only','SUBURBAN'],
+  ['Daan Go Cake Lab','Advance signup window missed (needed May 7)','MISSED'],
+  ['Sukoshi Mart','31-day signup window missed (unless already member)','MISSED'],
+  ['Marry Me Mochi','No real bday freebie — Fivestars points-based','NO PROGRAM'],
+  ['Mr. Puffs','No DT location (Stockyards / North York only)','NO DT'],
+  ['Daldongnae','No verified bday program — but great dinner alt @ 361 Yonge','NO PROGRAM']
+];
+
+/* ───────── Render ───────── */
+const $ = s => document.querySelector(s);
+const store = JSON.parse(localStorage.getItem('crawl26')||'{"done":[],"redeem":[]}');
+const save = () => localStorage.setItem('crawl26', JSON.stringify(store));
+
+function renderDoNow(){
+  const html = DO_NOW.map(d=>{
+    const done = store.done.includes(d.id);
+    return `<div class="donow ${done?'done':''}" data-id="${d.id}">
+      <div class="check">${done?'✓':''}</div>
+      <div>
+        <div class="donow-title">${d.t}</div>
+        <div class="donow-sub">${d.s}</div>
+      </div>
+      <div class="donow-meta">
+        <div class="deadline">${d.deadline}</div>
+        <a href="${d.link}" target="_blank" rel="noopener">open ↗</a>
+      </div>
+    </div>`;
+  }).join('');
+  $('#donow-list').innerHTML = html;
+  document.querySelectorAll('.donow').forEach(el=>{
+    el.addEventListener('click', e=>{
+      if(e.target.tagName==='A') return;
+      const id = el.dataset.id;
+      const i = store.done.indexOf(id);
+      if(i>=0) store.done.splice(i,1); else store.done.push(id);
+      save(); renderDoNow(); updateProgress();
+    });
+  });
+}
+function updateProgress(){
+  const n = store.done.length, total = DO_NOW.length;
+  const pct = Math.round(n/total*100);
+  $('#pbar').style.width = pct + '%';
+  $('#pct').textContent = pct + '%';
+  $('#todo-count2').textContent = `${n} of ${total}`;
+  $('#todo-counter').textContent = `${n} / ${total}`;
+}
+
+function renderStops(filter='all'){
+  const html = STOPS.filter(s=>filter==='all'||s.tier===filter).map((s,i)=>{
+    const redeemed = store.redeem.includes(s.name);
+    const dots = Array.from({length:5}).map((_,k)=>`<span class="${k<s.worth?'on':''}"></span>`).join('');
+    return `<article class="stop ${redeemed?'redeemed':''}" data-name="${s.name}" data-tier="${s.tier}">
+      <div class="stop-top">
+        <div class="stop-time">${s.time}</div>
+        <div class="tier ${s.tier}">${s.tier}</div>
+      </div>
+      <div class="stop-body">
+        <h3 class="stop-name">${s.name}</h3>
+        <div class="stop-freebie">${s.freebie}</div>
+        <div class="stop-addr"><a href="${s.maps}" target="_blank" rel="noopener">${s.addr} ↗</a></div>
+        <div class="stop-tc"><ul>${s.tc.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      </div>
+      <div class="stop-foot">
+        <div class="worth">${dots}</div>
+        <button class="redeem-btn" data-r="${s.name}">${redeemed?'Redeemed ✓':'Mark redeemed'}</button>
+      </div>
+    </article>`;
+  }).join('');
+  $('#timeline').innerHTML = html;
+  document.querySelectorAll('.redeem-btn').forEach(b=>{
+    b.addEventListener('click', e=>{
+      e.stopPropagation();
+      const n = b.dataset.r;
+      const i = store.redeem.indexOf(n);
+      if(i>=0) store.redeem.splice(i,1); else store.redeem.push(n);
+      save(); renderStops(activeFilter);
+    });
+  });
+}
+let activeFilter='all';
+document.querySelectorAll('.chip').forEach(c=>{
+  c.addEventListener('click', ()=>{
+    document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
+    c.setAttribute('aria-pressed','true');
+    activeFilter = c.dataset.filter;
+    renderStops(activeFilter);
+  });
+});
+
+function renderClusters(){
+  $('#clusters').innerHTML = CLUSTERS.map(c=>`
+    <div class="cluster">
+      <h3>${c.name}</h3>
+      <div class="cluster-time">${c.time}</div>
+      <ul>${c.stops.map(s=>`<li><b>${s[0]}</b><span>${s[1]}</span></li>`).join('')}</ul>
+    </div>`).join('');
+}
+function renderSkip(){
+  $('#skip-list').innerHTML = SKIP.map(s=>`
+    <div class="skip-row"><b>${s[0]}</b><span>${s[1]}</span><em>${s[2]}</em></div>`).join('');
+}
+
+/* ───────── Tabs ───────── */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    t.setAttribute('aria-selected','true');
+    document.getElementById(t.dataset.target).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* ───────── Countdown ───────── */
+function pad(n){return String(n).padStart(2,'0')}
+function fmt(ms){
+  if(ms<0) return 'PASSED';
+  const d=Math.floor(ms/86400000), h=Math.floor(ms/3600000)%24, m=Math.floor(ms/60000)%60;
+  if(d>0) return `${d}d ${pad(h)}h ${pad(m)}m`;
+  return `${pad(h)}h ${pad(m)}m`;
+}
+function tick(){
+  const now = new Date();
+  const signup = new Date('2026-05-31T23:59:59-04:00');
+  const crawl = new Date('2026-06-07T10:30:00-04:00');
+  $('#cd-signup').textContent = fmt(signup-now);
+  $('#cd-crawl').textContent  = fmt(crawl-now);
+}
+setInterval(tick, 60000); tick();
+
+/* ───────── Reset ───────── */
+$('#reset-btn').addEventListener('click', e=>{
+  e.preventDefault();
+  if(confirm('Clear all checkmarks?')){
+    store.done = []; store.redeem = []; save();
+    renderDoNow(); renderStops(activeFilter); updateProgress();
+  }
+});
+
+/* ───────── Boot ───────── */
+renderDoNow(); renderStops(); renderClusters(); renderSkip(); updateProgress();
+</script>
+</body>
+</html>

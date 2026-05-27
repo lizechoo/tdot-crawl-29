@@ -1,0 +1,9 @@
+node_modules/
+*.mjs
+batch-*.json
+vendors.json
+findings-*.md
+ITINERARY.md
+crawl.html
+*.log
+.DS_Store
