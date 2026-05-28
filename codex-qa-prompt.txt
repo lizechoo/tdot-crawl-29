@@ -1,0 +1,37 @@
+You are a mobile QA agent. Mission: audit https://lizechoo.github.io/tdot-crawl-29/ for mobile responsiveness issues at iPhone 14 viewport (390x844 CSS pixels).
+
+Use Playwright (install if needed: `npm i playwright && npx playwright install chromium`). Drive a headed or headless Chromium with `deviceScaleFactor: 3, isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 }`.
+
+Steps:
+1. Load the URL. Wait for fonts to settle.
+2. Screenshot full page (each tab):
+   - Tab 1 "Do now"
+   - Tab 2 "June 7 plan"
+   - Tab 3 "Route map"
+   - Tab 4 "Skipped"
+3. For EACH tab, evaluate JS to detect:
+   - `document.documentElement.scrollWidth > 390` (horizontal overflow — BAD)
+   - any element with `getBoundingClientRect().right > 390` (overflowing element)
+   - tap targets < 44x44 CSS px (Apple HIG): buttons, links, .check, .chip, .tab
+   - sticky overlap between countdown bar + tabs (do they cover content?)
+   - text that's clipped (textContent length vs offsetWidth heuristic, or overflow:hidden + ellipsis)
+   - check font sizes < 13px in body text
+4. Inspect specific known risk areas:
+   - `.hero-grid` mobile collapse — does "29" stay readable
+   - `.donow` grid w/ 3 cols on mobile (already has media query) — verify meta wraps
+   - `.timeline` cards single column on narrow
+   - `.skip-row` grid collapse
+   - Countdown bar wraps cleanly
+5. Save screenshots to `/tmp/qa-screens/` numbered 01-04.
+6. Output a SHORT markdown report at `/Users/lizechoo/Desktop/Claude/freebie-crawl/qa-report.md` with:
+   - Top 5 specific issues found (file:selector + what's wrong + suggested CSS fix)
+   - Pass/fail per tab
+   - 3-5 line summary
+7. Print the qa-report.md to stdout when done.
+
+CONSTRAINTS:
+- Keep total runtime under 8 minutes.
+- Don't suggest broad redesigns — only concrete CSS line changes.
+- If a check is fine, just skip mentioning it.
+- Source HTML is at /Users/lizechoo/Desktop/Claude/freebie-crawl/index.html — read it first so your selectors match.
+- DO NOT modify index.html. Only report.

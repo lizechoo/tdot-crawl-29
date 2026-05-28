@@ -11,28 +11,20 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&family=Instrument+Serif:ital@0;1&family=Manrope:wght@300..800&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <style>
   :root{
-    --paper:#F4ECDE;
-    --paper-2:#EADFC9;
-    --ink:#141414;
-    --ink-2:#3A332B;
-    --ink-soft:#7A6F62;
-    --rule:#1A1A1A;
-    --cherry:#D43A2F;
-    --cherry-deep:#9C211A;
-    --gold:#C99845;
-    --mint:#3F7A5E;
-    --skip:#9A9389;
-    --paper-shadow: 0 1px 0 rgba(20,20,20,.05), 0 12px 32px -16px rgba(20,20,20,.35);
+    --paper:#F4ECDE; --paper-2:#EADFC9; --ink:#141414; --ink-2:#3A332B;
+    --ink-soft:#7A6F62; --cherry:#D43A2F; --cherry-deep:#9C211A;
+    --gold:#C99845; --mint:#3F7A5E; --skip:#9A9389;
+    --bar-h: 54px; --tabs-h: 56px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'Manrope',system-ui,sans-serif;
-    font-size:16px;line-height:1.5;
+    background:var(--paper);color:var(--ink);
+    font-family:'Manrope',system-ui,sans-serif;font-size:16px;line-height:1.5;
     -webkit-font-smoothing:antialiased;
     background-image:
       radial-gradient(circle at 12% 18%, rgba(212,58,47,.06), transparent 35%),
@@ -42,78 +34,40 @@
   }
   ::selection{background:var(--cherry);color:var(--paper)}
 
-  /* ── HERO ─────────────────────────── */
-  .hero{
-    position:relative;
-    padding:48px 28px 40px;
-    border-bottom:2px solid var(--ink);
-    overflow:hidden;
-  }
-  .hero-top{
-    display:flex;justify-content:space-between;align-items:flex-start;
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--ink-2);
-    margin-bottom:42px;
-  }
-  .hero-top span{display:block}
-  .stamp{
-    border:1.5px solid var(--cherry);color:var(--cherry);
-    padding:5px 10px;border-radius:2px;
-    transform:rotate(-3deg);
-    font-weight:500;
-  }
-  .hero-grid{
-    display:grid;
-    grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr);
-    gap:24px;align-items:end;
-  }
+  .hero{position:relative;padding:48px 28px 40px;border-bottom:2px solid var(--ink);overflow:hidden}
+  .hero-top{display:flex;justify-content:space-between;align-items:flex-start;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--ink-2);margin-bottom:42px;gap:12px;flex-wrap:wrap}
+  .stamp{border:1.5px solid var(--cherry);color:var(--cherry);padding:5px 10px;
+    border-radius:2px;transform:rotate(-3deg);font-weight:500}
+  .hero-grid{display:grid;grid-template-columns: minmax(0,0.9fr) minmax(0,1.1fr);
+    gap:24px;align-items:end}
   @media (max-width:760px){.hero-grid{grid-template-columns:1fr;gap:8px}}
-  .twentynine{
-    font-family:'Fraunces',serif;
-    font-variation-settings:"opsz" 144,"SOFT" 100,"wght" 400;
-    font-style:italic;
-    font-size:clamp(180px,32vw,320px);
-    line-height:.78;letter-spacing:-.06em;color:var(--ink);
-    position:relative;
-    text-shadow: 4px 4px 0 var(--cherry);
-  }
-  .twentynine::after{
-    content:"";position:absolute;
-    right:6%;top:14%;width:28px;height:28px;
+  .twentynine{font-family:'Fraunces',serif;
+    font-variation-settings:"opsz" 144,"SOFT" 100,"wght" 400;font-style:italic;
+    font-size:clamp(180px,32vw,320px);line-height:.78;letter-spacing:-.06em;
+    color:var(--ink);position:relative;text-shadow: 4px 4px 0 var(--cherry)}
+  .twentynine::after{content:"";position:absolute;right:6%;top:14%;width:28px;height:28px;
     background:var(--cherry);border-radius:50%;
-    box-shadow:0 0 0 6px var(--paper),0 0 0 8px var(--cherry);
-  }
+    box-shadow:0 0 0 6px var(--paper),0 0 0 8px var(--cherry)}
   .hero-text{padding-bottom:8px}
-  .hero-text h1{
-    font-family:'Fraunces',serif;
+  .hero-text h1{font-family:'Fraunces',serif;
     font-variation-settings:"opsz" 144,"wght" 700;
-    font-size:clamp(36px,4.6vw,58px);
-    line-height:.95;letter-spacing:-.025em;
-    margin-bottom:18px;
-  }
-  .hero-text h1 em{
-    font-style:italic;color:var(--cherry);
-    font-variation-settings:"opsz" 144,"wght" 500,"SOFT" 80;
-  }
-  .meta-row{
-    display:flex;flex-wrap:wrap;gap:14px 22px;
-    font-family:'JetBrains Mono',monospace;
-    font-size:12px;color:var(--ink-2);
+    font-size:clamp(36px,4.6vw,58px);line-height:.95;letter-spacing:-.025em;margin-bottom:18px}
+  .hero-text h1 em{font-style:italic;color:var(--cherry);
+    font-variation-settings:"opsz" 144,"wght" 500,"SOFT" 80}
+  .meta-row{display:flex;flex-wrap:wrap;gap:14px 22px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-2);
     letter-spacing:.08em;text-transform:uppercase;
-    border-top:1px solid var(--ink);padding-top:14px;margin-top:14px;
-  }
+    border-top:1px solid var(--ink);padding-top:14px;margin-top:14px}
   .meta-row b{color:var(--cherry);font-weight:700}
 
-  /* ── COUNTDOWN ─────────────────────── */
   .countdown-bar{
-    background:var(--ink);color:var(--paper);
-    padding:14px 28px;
-    display:flex;flex-wrap:wrap;gap:22px;justify-content:space-between;align-items:center;
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;letter-spacing:.06em;
-    position:sticky;top:0;z-index:50;
-    border-bottom:1px solid var(--gold);
+    background:var(--ink);color:var(--paper);padding:12px 28px;
+    display:flex;flex-wrap:wrap;gap:14px 22px;justify-content:space-between;align-items:center;
+    font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em;
+    position:sticky;top:0;z-index:50;border-bottom:1px solid var(--gold);
+    min-height:var(--bar-h)
   }
   .countdown-bar strong{color:var(--cherry)}
   .countdown-grid{display:flex;gap:18px;flex-wrap:wrap}
@@ -122,29 +76,17 @@
   .cd-val{font-size:18px;font-weight:600}
   .cd-val.urgent{color:var(--cherry)}
 
-  /* ── TABS ──────────────────────────── */
-  .tabs{
-    display:flex;gap:0;border-bottom:2px solid var(--ink);
-    background:var(--paper);
-    position:sticky;top:52px;z-index:40;
-    overflow-x:auto;
-  }
-  .tab{
-    flex:1;min-width:120px;
-    padding:18px 12px;
-    font-family:'Fraunces',serif;
-    font-variation-settings:"opsz" 14,"wght" 600;
+  .tabs{display:flex;gap:0;border-bottom:2px solid var(--ink);
+    background:var(--paper);position:sticky;top:var(--bar-h);z-index:40;
+    overflow-x:auto;min-height:var(--tabs-h)}
+  .tab{flex:1;min-width:110px;padding:16px 10px;min-height:44px;
+    font-family:'Fraunces',serif;font-variation-settings:"opsz" 14,"wght" 600;
     font-size:14px;letter-spacing:.04em;text-transform:uppercase;
     background:none;border:0;border-right:1px solid var(--ink);
-    color:var(--ink);cursor:pointer;
-    transition:.18s background;
-    white-space:nowrap;
-  }
+    color:var(--ink);cursor:pointer;transition:.18s background;white-space:nowrap}
   .tab:last-child{border-right:0}
-  .tab .num{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    color:var(--cherry);margin-right:6px;letter-spacing:.05em;
-  }
+  .tab .num{font-family:'JetBrains Mono',monospace;font-size:10px;
+    color:var(--cherry);margin-right:6px;letter-spacing:.05em}
   .tab:hover{background:var(--paper-2)}
   .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
   .tab[aria-selected="true"] .num{color:var(--gold)}
@@ -153,56 +95,50 @@
   section.panel.active{display:block;animation:fadeUp .5s ease both}
   @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-  /* ── PANEL HEADERS ────────────────── */
-  .panel-header{
-    display:flex;align-items:baseline;gap:14px;
-    border-bottom:1.5px solid var(--ink);
-    padding-bottom:14px;margin-bottom:30px;
-    flex-wrap:wrap;
-  }
-  .panel-header .idx{
-    font-family:'JetBrains Mono',monospace;
-    font-size:11px;letter-spacing:.18em;color:var(--cherry);
-  }
-  .panel-header h2{
-    font-family:'Fraunces',serif;
+  .panel-header{display:flex;align-items:baseline;gap:14px;
+    border-bottom:1.5px solid var(--ink);padding-bottom:14px;margin-bottom:30px;flex-wrap:wrap}
+  .panel-header .idx{font-family:'JetBrains Mono',monospace;font-size:11px;
+    letter-spacing:.18em;color:var(--cherry)}
+  .panel-header h2{font-family:'Fraunces',serif;
     font-variation-settings:"opsz" 144,"wght" 700;
-    font-size:clamp(34px,5vw,54px);letter-spacing:-.025em;line-height:1;
-  }
-  .panel-header h2 em{font-style:italic;color:var(--cherry);font-variation-settings:"opsz" 144,"wght" 500}
-  .panel-header p{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:18px;color:var(--ink-2);max-width:520px;margin-left:auto;
-  }
+    font-size:clamp(34px,5vw,54px);letter-spacing:-.025em;line-height:1}
+  .panel-header h2 em{font-style:italic;color:var(--cherry);
+    font-variation-settings:"opsz" 144,"wght" 500}
+  .panel-header p{font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:18px;color:var(--ink-2);max-width:520px;margin-left:auto}
 
-  /* ── DO NOW LIST ──────────────────── */
-  .progress-shell{
-    border:1.5px solid var(--ink);
-    background:var(--paper-2);
-    padding:18px 22px;margin-bottom:30px;
-    display:flex;gap:24px;align-items:center;flex-wrap:wrap;
-  }
-  .progress-bar{
-    flex:1;min-width:180px;height:10px;border:1px solid var(--ink);
-    position:relative;background:var(--paper);
-  }
+  .progress-shell{border:1.5px solid var(--ink);background:var(--paper-2);
+    padding:18px 22px;margin-bottom:24px;display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .progress-bar{flex:1;min-width:180px;height:10px;border:1px solid var(--ink);
+    position:relative;background:var(--paper)}
   .progress-fill{height:100%;background:var(--cherry);width:0%;transition:width .4s}
-  .progress-shell .stats{
-    font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;
-  }
+  .progress-shell .stats{font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.06em}
   .progress-shell .stats b{color:var(--cherry);font-size:18px}
+
+  .urgency-section{margin-bottom:32px}
+  .urgency-section h3{
+    font-family:'Fraunces',serif;font-variation-settings:"opsz" 60,"wght" 700;
+    font-size:22px;letter-spacing:-.02em;margin-bottom:6px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
+  }
+  .urgency-section h3 em{font-style:italic;font-variation-settings:"opsz" 60,"wght" 500}
+  .urgency-section h3 .pill{
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
+    padding:3px 8px;text-transform:uppercase;font-weight:700;
+  }
+  .pill-red{background:var(--cherry);color:var(--paper)}
+  .pill-gold{background:var(--gold);color:var(--ink)}
+  .pill-mint{background:var(--mint);color:var(--paper)}
+  .urgency-section .desc{
+    font-family:'Instrument Serif',serif;font-style:italic;color:var(--ink-2);
+    font-size:15px;margin-bottom:14px;
+  }
 
   .donow-list{display:grid;gap:14px}
   .donow{
-    display:grid;
-    grid-template-columns: 36px 1fr auto;
-    gap:14px;align-items:start;
-    background:var(--paper);
-    border:1.5px solid var(--ink);
-    padding:18px 20px;
-    cursor:pointer;
-    position:relative;
-    transition:.18s transform,.18s box-shadow;
+    display:grid;grid-template-columns: 44px 1fr auto;gap:14px;align-items:start;
+    background:var(--paper);border:1.5px solid var(--ink);padding:16px 18px;
+    cursor:pointer;position:relative;transition:.18s transform,.18s box-shadow;
+    min-height:64px;
   }
   .donow:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
   .donow.done{background:var(--paper-2)}
@@ -212,222 +148,150 @@
     font-family:'JetBrains Mono',monospace;font-size:9px;
     background:var(--mint);color:var(--paper);padding:2px 6px;letter-spacing:.1em;
   }
-  .check{
-    width:28px;height:28px;border:1.5px solid var(--ink);
+  .check{width:44px;height:44px;border:1.5px solid var(--ink);
     display:flex;align-items:center;justify-content:center;
-    background:var(--paper);font-size:18px;line-height:1;
-    transition:.18s;
-  }
+    background:var(--paper);font-size:22px;line-height:1;transition:.18s}
   .donow.done .check{background:var(--cherry);color:var(--paper);border-color:var(--cherry)}
-  .donow-title{
-    font-family:'Fraunces',serif;
+  .donow-title{font-family:'Fraunces',serif;
     font-variation-settings:"opsz" 36,"wght" 600;
-    font-size:19px;line-height:1.2;letter-spacing:-.01em;
-  }
-  .donow-sub{
-    font-size:13px;color:var(--ink-2);margin-top:4px;line-height:1.45;
-  }
-  .donow-meta{
-    text-align:right;font-family:'JetBrains Mono',monospace;
+    font-size:18px;line-height:1.2;letter-spacing:-.01em}
+  .donow-sub{font-size:13.5px;color:var(--ink-2);margin-top:4px;line-height:1.45}
+  .donow-meta{text-align:right;font-family:'JetBrains Mono',monospace;
     font-size:11px;letter-spacing:.08em;color:var(--ink-2);
-    text-transform:uppercase;line-height:1.4;white-space:nowrap;
-  }
-  .donow-meta .deadline{color:var(--cherry);font-weight:700}
-  .donow-meta a{
-    color:var(--ink);text-decoration:underline;text-underline-offset:3px;
-    text-decoration-thickness:1px;
-  }
+    text-transform:uppercase;line-height:1.5;white-space:nowrap}
+  .donow-meta .deadline{color:var(--cherry);font-weight:700;font-size:12px}
+  .donow-meta a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-thickness:1px;display:inline-block;padding:6px 0;min-height:32px}
   .donow-meta a:hover{color:var(--cherry)}
 
-  /* ── DAY OF STOPS ─────────────────── */
-  .timeline{
-    display:grid;gap:22px;
-    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
-  }
-  .filter-row{
-    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;
-    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;
-  }
-  .chip{
-    border:1.5px solid var(--ink);background:var(--paper);
-    padding:6px 12px;cursor:pointer;text-transform:uppercase;
-    transition:.18s;
-  }
+  .timeline{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(330px,1fr))}
+  .filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em}
+  .chip{border:1.5px solid var(--ink);background:var(--paper);
+    padding:10px 14px;cursor:pointer;text-transform:uppercase;transition:.18s;
+    min-height:44px;font-family:inherit;font-size:11px;letter-spacing:inherit;color:var(--ink)}
   .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
-  .stop{
-    border:1.5px solid var(--ink);
-    background:var(--paper);
-    padding:0;
-    position:relative;
-    transition:.18s transform,.22s box-shadow;
-    display:flex;flex-direction:column;
-  }
+  .stop{border:1.5px solid var(--ink);background:var(--paper);
+    position:relative;transition:.18s transform,.22s box-shadow;display:flex;flex-direction:column}
   .stop:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--ink)}
   .stop.redeemed{background:#EBE2D0}
   .stop.redeemed .stop-name{text-decoration:line-through;color:var(--ink-soft)}
-  .stop-top{
-    padding:14px 18px 10px;
-    border-bottom:1px dashed var(--ink);
-    display:flex;justify-content:space-between;align-items:center;gap:10px;
-  }
-  .stop-time{
-    font-family:'JetBrains Mono',monospace;
-    font-size:13px;font-weight:600;letter-spacing:.06em;
-  }
-  .tier{
-    font-family:'JetBrains Mono',monospace;
-    font-size:9px;letter-spacing:.18em;padding:3px 8px;
-    text-transform:uppercase;font-weight:700;
-  }
+  .stop-top{padding:14px 18px 10px;border-bottom:1px dashed var(--ink);
+    display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .stop-time{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;letter-spacing:.06em}
+  .tier{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+    padding:4px 9px;text-transform:uppercase;font-weight:700}
   .tier.must{background:var(--cherry);color:var(--paper)}
   .tier.maybe{background:var(--gold);color:var(--ink)}
   .tier.recruit{background:var(--mint);color:var(--paper)}
   .tier.dinner{background:var(--ink);color:var(--paper)}
+  .tier.bonus{background:#7A4FB5;color:var(--paper)}
   .stop-body{padding:16px 18px 14px;flex:1;display:flex;flex-direction:column;gap:8px}
-  .stop-name{
-    font-family:'Fraunces',serif;
+  .stop-name{font-family:'Fraunces',serif;
     font-variation-settings:"opsz" 60,"wght" 700;
-    font-size:26px;line-height:1.05;letter-spacing:-.02em;
-  }
-  .stop-freebie{
-    font-family:'Instrument Serif',serif;font-style:italic;
-    font-size:18px;color:var(--cherry-deep);line-height:1.3;
-  }
-  .stop-addr{
-    font-size:13px;color:var(--ink-2);line-height:1.45;
-  }
-  .stop-addr a{
-    color:var(--ink);font-weight:600;text-decoration:underline;
-    text-underline-offset:3px;text-decoration-thickness:1px;
-  }
+    font-size:24px;line-height:1.05;letter-spacing:-.02em}
+  .stop-freebie{font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:18px;color:var(--cherry-deep);line-height:1.3}
+  .stop-addr{font-size:13.5px;color:var(--ink-2);line-height:1.45}
+  .stop-addr a{color:var(--ink);font-weight:600;text-decoration:underline;
+    text-underline-offset:3px;text-decoration-thickness:1px;padding:4px 0;display:inline-block}
   .stop-addr a:hover{color:var(--cherry)}
-  .stop-tc{
-    font-size:12.5px;line-height:1.55;color:var(--ink-2);
-    border-top:1px solid var(--ink);padding-top:10px;margin-top:6px;
-  }
+  .stop-tc{font-size:13px;line-height:1.55;color:var(--ink-2);
+    border-top:1px solid var(--ink);padding-top:10px;margin-top:6px}
   .stop-tc b{color:var(--ink)}
   .stop-tc ul{padding-left:16px;margin-top:4px}
   .stop-tc li{margin-bottom:3px}
-  .stop-foot{
-    border-top:1.5px solid var(--ink);
+  .stop-foot{border-top:1.5px solid var(--ink);
     display:flex;justify-content:space-between;align-items:center;
     padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;
-    letter-spacing:.08em;text-transform:uppercase;
-  }
+    letter-spacing:.08em;text-transform:uppercase;gap:10px}
   .worth{display:flex;gap:2px}
-  .worth span{
-    display:inline-block;width:10px;height:10px;border-radius:50%;
-    background:var(--paper-2);border:1px solid var(--ink);
-  }
+  .worth span{display:inline-block;width:10px;height:10px;border-radius:50%;
+    background:var(--paper-2);border:1px solid var(--ink)}
   .worth span.on{background:var(--cherry);border-color:var(--cherry)}
-  .redeem-btn{
-    background:none;border:1px solid var(--ink);
-    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;
-    padding:5px 9px;cursor:pointer;text-transform:uppercase;
-    transition:.18s;
-  }
+  .redeem-btn{background:none;border:1px solid var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;
+    padding:10px 12px;cursor:pointer;text-transform:uppercase;transition:.18s;min-height:44px}
   .redeem-btn:hover{background:var(--ink);color:var(--paper)}
   .stop.redeemed .redeem-btn{background:var(--cherry);color:var(--paper);border-color:var(--cherry)}
 
-  /* ── MAP / CLUSTERS ──────────────── */
-  .clusters{
-    display:grid;gap:20px;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  #map-wrap{
+    border:1.5px solid var(--ink);background:var(--paper);
+    margin-bottom:24px;position:relative;
+    box-shadow:6px 6px 0 var(--ink);
   }
-  .cluster{
-    border:1.5px solid var(--ink);
-    padding:20px 22px;
-    background:var(--paper);
-    position:relative;
+  #leaf{height:560px;width:100%;background:#dfd6c2;z-index:1}
+  @media (max-width:640px){#leaf{height:480px}}
+  .map-legend{
+    border-top:1.5px solid var(--ink);padding:12px 16px;
+    display:flex;flex-wrap:wrap;gap:14px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;
   }
-  .cluster::before{
-    content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:6px;
-    background:repeating-linear-gradient(90deg,var(--ink) 0 12px,transparent 12px 18px);
-  }
-  .cluster h3{
-    font-family:'Fraunces',serif;
+  .map-legend span{display:inline-flex;align-items:center;gap:6px}
+  .map-legend i{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid var(--ink)}
+  .leaflet-popup-content{font-family:'Manrope',sans-serif;font-size:13.5px;line-height:1.45}
+  .leaflet-popup-content b{font-family:'Fraunces',serif;font-size:16px;display:block;margin-bottom:4px}
+  .leaflet-popup-content em{color:var(--cherry-deep);font-style:italic}
+  .leaflet-popup-content a{color:var(--ink);font-weight:600;display:inline-block;margin-top:6px}
+
+  .clusters{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+  .cluster{border:1.5px solid var(--ink);padding:20px 22px;background:var(--paper);position:relative}
+  .cluster::before{content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:6px;
+    background:repeating-linear-gradient(90deg,var(--ink) 0 12px,transparent 12px 18px)}
+  .cluster h3{font-family:'Fraunces',serif;
     font-variation-settings:"opsz" 60,"wght" 700;
-    font-size:22px;letter-spacing:-.02em;line-height:1;margin-top:8px;
-  }
+    font-size:22px;letter-spacing:-.02em;line-height:1;margin-top:8px}
   .cluster h3 em{font-style:italic;color:var(--cherry);font-variation-settings:"opsz" 60,"wght" 500}
-  .cluster-time{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    letter-spacing:.18em;color:var(--ink-2);
-    margin-top:6px;text-transform:uppercase;
-  }
+  .cluster-time{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;
+    color:var(--ink-2);margin-top:6px;text-transform:uppercase}
   .cluster ul{list-style:none;margin-top:14px;border-top:1px solid var(--ink)}
-  .cluster li{
-    padding:9px 0;border-bottom:1px dotted var(--ink-soft);
-    display:flex;justify-content:space-between;gap:10px;
-    font-size:13.5px;align-items:baseline;
-  }
+  .cluster li{padding:9px 0;border-bottom:1px dotted var(--ink-soft);
+    display:flex;justify-content:space-between;gap:10px;font-size:14px;align-items:baseline}
   .cluster li:last-child{border-bottom:0}
   .cluster li b{font-family:'Fraunces',serif;font-weight:600;font-size:15px}
-  .cluster li span{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    color:var(--ink-2);letter-spacing:.06em;
-  }
+  .cluster li span{font-family:'JetBrains Mono',monospace;font-size:11px;
+    color:var(--ink-2);letter-spacing:.06em}
 
-  /* ── SKIPPED ──────────────────────── */
   .skip-list{display:grid;gap:10px}
-  .skip-row{
-    display:grid;
-    grid-template-columns:minmax(140px,200px) 1fr auto;
-    gap:18px;align-items:baseline;
-    padding:13px 18px;border:1px solid var(--skip);
-    background:rgba(154,147,137,.08);
-    font-size:14px;
-  }
-  .skip-row b{
-    font-family:'Fraunces',serif;font-weight:600;font-size:17px;
-    color:var(--ink-soft);text-decoration:line-through;
-    text-decoration-thickness:1.5px;
-  }
+  .skip-row{display:grid;grid-template-columns:minmax(140px,200px) 1fr auto;
+    gap:18px;align-items:baseline;padding:13px 18px;border:1px solid var(--skip);
+    background:rgba(154,147,137,.08);font-size:14px}
+  .skip-row b{font-family:'Fraunces',serif;font-weight:600;font-size:17px;
+    color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1.5px}
   .skip-row span{color:var(--ink-2);line-height:1.4}
-  .skip-row em{
-    font-family:'JetBrains Mono',monospace;font-style:normal;font-size:10px;
-    letter-spacing:.1em;color:var(--skip);text-transform:uppercase;
-  }
+  .skip-row em{font-family:'JetBrains Mono',monospace;font-style:normal;font-size:10.5px;
+    letter-spacing:.1em;color:var(--skip);text-transform:uppercase}
 
-  /* ── FOOTER ───────────────────────── */
-  footer{
-    border-top:2px solid var(--ink);
-    padding:32px 28px 60px;text-align:center;
+  footer{border-top:2px solid var(--ink);padding:32px 28px 60px;text-align:center;
     font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
-    color:var(--ink-2);text-transform:uppercase;
-  }
+    color:var(--ink-2);text-transform:uppercase}
   footer em{font-style:normal;color:var(--cherry)}
 
-  /* tally box */
-  .tally{
-    background:var(--ink);color:var(--paper);
-    padding:22px 26px;margin-top:30px;
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px;
-  }
+  .tally{background:var(--ink);color:var(--paper);padding:22px 26px;margin-top:30px;
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:24px}
   .tally div{display:flex;flex-direction:column;gap:6px}
-  .tally span{
-    font-family:'JetBrains Mono',monospace;font-size:10px;
-    color:var(--gold);letter-spacing:.18em;text-transform:uppercase;
-  }
-  .tally b{
-    font-family:'Fraunces',serif;
-    font-variation-settings:"opsz" 144,"wght" 600;
-    font-size:34px;line-height:1;letter-spacing:-.02em;
-  }
+  .tally span{font-family:'JetBrains Mono',monospace;font-size:10.5px;
+    color:var(--gold);letter-spacing:.18em;text-transform:uppercase}
+  .tally b{font-family:'Fraunces',serif;font-variation-settings:"opsz" 144,"wght" 600;
+    font-size:34px;line-height:1;letter-spacing:-.02em}
   .tally b em{font-style:italic;color:var(--cherry)}
 
-  /* mobile tweaks */
   @media (max-width:640px){
     .hero{padding:32px 20px 28px}
     section.panel{padding:28px 20px 60px}
-    .countdown-bar{padding:12px 20px;font-size:11px}
-    .cd-val{font-size:15px}
+    .countdown-bar{padding:12px 18px;font-size:12px;gap:10px}
+    .tabs{top:86px}
+    .cd-val{font-size:16px}
     .tab{font-size:12px;padding:14px 8px;min-width:90px}
-    .panel-header p{margin-left:0}
-    .donow{grid-template-columns: 28px 1fr;}
-    .donow-meta{grid-column:1/-1;text-align:left;margin-left:42px;border-top:1px dashed var(--ink);padding-top:8px}
+    .panel-header p{margin-left:0;font-size:16px}
+    .donow{grid-template-columns: 44px 1fr;padding:14px 14px}
+    .donow-meta{grid-column:1/-1;text-align:left;margin-left:58px;
+      border-top:1px dashed var(--ink);padding-top:8px;font-size:11.5px}
+    .donow-sub{font-size:13px}
     .skip-row{grid-template-columns:1fr;gap:4px}
     .skip-row em{justify-self:start}
+    .stop-foot{font-size:11px}
+    .map-legend{font-size:11.5px}
   }
 </style>
 </head>
@@ -436,18 +300,18 @@
 <header class="hero">
   <div class="hero-top">
     <span>The Ultimate Birthday<br/>Freebie Crawl Field Guide</span>
-    <span class="stamp">EDITION · ‘26</span>
+    <span class="stamp">EDITION · ‘26 · v2</span>
     <span style="text-align:right">Toronto, ON<br/>43.6532° N · 79.3832° W</span>
   </div>
   <div class="hero-grid">
     <div class="twentynine">29</div>
     <div class="hero-text">
-      <h1>One <em>year</em> older.<br/>Eleven <em>walks</em> of free food.</h1>
+      <h1>One <em>year</em> older.<br/>Thirty <em>walks</em> of free food.</h1>
       <div class="meta-row">
         <span><b>SUN</b> · JUN 07 · 2026</span>
         <span>Downtown Toronto</span>
         <span>+1 (girlfriend)</span>
-        <span><b>9</b> stops confirmed</span>
+        <span><b>15</b> Must-hits · 10+ optionals</span>
         <span>1 recruit-required jackpot</span>
       </div>
     </div>
@@ -457,15 +321,15 @@
 <div class="countdown-bar">
   <div class="countdown-grid">
     <div class="cd-block">
-      <span class="cd-label">Signup cutoff (May 31)</span>
+      <span class="cd-label">Signup cutoff · May 31</span>
       <span class="cd-val urgent" id="cd-signup">—</span>
     </div>
     <div class="cd-block">
-      <span class="cd-label">Crawl day (Jun 07)</span>
+      <span class="cd-label">Crawl day · Jun 07</span>
       <span class="cd-val" id="cd-crawl">—</span>
     </div>
   </div>
-  <div><strong id="todo-counter">0 / 11</strong> · sign-ups complete</div>
+  <div><strong id="todo-counter">0 / 0</strong> · sign-ups complete</div>
 </div>
 
 <nav class="tabs" role="tablist">
@@ -475,31 +339,27 @@
   <button class="tab" role="tab" aria-selected="false" data-target="skipped"><span class="num">04</span>Skipped</button>
 </nav>
 
-<!-- ──────────────── DO NOW ──────────────── -->
 <section class="panel active" id="do-now">
   <div class="panel-header">
     <span class="idx">— 01 / Pre-flight checklist</span>
     <h2>Do <em>today</em>.</h2>
-    <p>Most birthday programs gate redemption on advance signup. May 31 is the hard floor for the 7-day-rule chains. Tap a row to mark it done — progress saves to this device.</p>
+    <p>Birthday programs gate redemption on advance signup. Three urgency tiers below. Tap any row to mark done — progress saves to this device.</p>
   </div>
 
   <div class="progress-shell">
-    <div class="stats"><b id="pct">0%</b> COMPLETE · <span id="todo-count2">0 of 11</span></div>
+    <div class="stats"><b id="pct">0%</b> COMPLETE · <span id="todo-count2">0 of 0</span></div>
     <div class="progress-bar"><div class="progress-fill" id="pbar"></div></div>
     <div class="stats">RESET <a href="#" id="reset-btn" style="color:var(--cherry);text-decoration:underline">↻</a></div>
   </div>
 
-  <div class="donow-list" id="donow-list">
-    <!-- injected -->
-  </div>
+  <div id="donow-render"></div>
 </section>
 
-<!-- ──────────────── DAY OF ──────────────── -->
 <section class="panel" id="day-of">
   <div class="panel-header">
     <span class="idx">— 02 / The crawl, hour by hour</span>
     <h2>June <em>seventh</em>.</h2>
-    <p>Eleven stops, north-to-south down Yonge, west to Chinatown, dinner downtown. Tap the address for Google Maps. Tap REDEEM when you’ve cashed the freebie.</p>
+    <p>Thirty-plus stops. North→south along Yonge with west swings into Chinatown + Queen W. Filter chips below. Tap address → Google Maps. Tap REDEEM when you cash it.</p>
   </div>
 
   <div class="filter-row">
@@ -508,132 +368,262 @@
     <button class="chip" aria-pressed="false" data-filter="maybe">Maybe</button>
     <button class="chip" aria-pressed="false" data-filter="recruit">Recruit</button>
     <button class="chip" aria-pressed="false" data-filter="dinner">Dinner</button>
+    <button class="chip" aria-pressed="false" data-filter="bonus">Bonus / Date</button>
   </div>
 
-  <div class="timeline" id="timeline"><!-- injected --></div>
+  <div class="timeline" id="timeline"></div>
 
   <div class="tally">
-    <div><span>Free retail value</span><b>~<em>$130–160</em></b></div>
-    <div><span>Skincare alone</span><b>~$75</b></div>
-    <div><span>Stops</span><b>9 + 1</b></div>
-    <div><span>You spend</span><b>~$15<small style="font-size:.4em;letter-spacing:.1em">+keg dinner</small></b></div>
+    <div><span>Confirmed free value</span><b>~<em>$200–250</em></b></div>
+    <div><span>Skincare alone</span><b>~$95</b></div>
+    <div><span>Stops you can hit</span><b>~15-20</b></div>
+    <div><span>You spend</span><b>~$25<small style="font-size:.4em;letter-spacing:.1em">+dinner</small></b></div>
   </div>
 </section>
 
-<!-- ──────────────── MAP ──────────────── -->
 <section class="panel" id="map">
   <div class="panel-header">
-    <span class="idx">— 03 / Geographic clusters</span>
-    <h2>The <em>route</em>.</h2>
-    <p>Walkable spine: Yonge from Bloor to Front, with one streetcar hop west to Chinatown. Bring transit, comfy shoes, an empty stomach.</p>
+    <span class="idx">— 03 / The route</span>
+    <h2>On <em>foot</em>.</h2>
+    <p>Live OSM map. Every confirmed stop is plotted. Tap a marker for freebie + maps deeplink. All within a 25-min walking radius of Yonge/Dundas.</p>
   </div>
+
+  <div id="map-wrap">
+    <div id="leaf"></div>
+    <div class="map-legend">
+      <span><i style="background:#D43A2F"></i>Must</span>
+      <span><i style="background:#C99845"></i>Maybe</span>
+      <span><i style="background:#3F7A5E"></i>Recruit</span>
+      <span><i style="background:#141414"></i>Dinner</span>
+      <span><i style="background:#7A4FB5"></i>Bonus / Date</span>
+    </div>
+  </div>
+
   <div class="clusters" id="clusters"></div>
 </section>
 
-<!-- ──────────────── SKIPPED ──────────────── -->
 <section class="panel" id="skipped">
   <div class="panel-header">
     <span class="idx">— 04 / Dead pool</span>
     <h2>Not <em>worth it</em>.</h2>
-    <p>Vendors we audited and cut. Saved you the wasted trip — most are either closed, suburban, missed-window, or carry a paying-guest minimum that breaks a 2-person crawl.</p>
+    <p>Vendors we audited and cut — closed, suburban, missed-window, group-min, or makeup-only.</p>
   </div>
   <div class="skip-list" id="skip-list"></div>
 </section>
 
 <footer>
-  Field-tested by 3 Sonnet agents via CloakBrowser · for one <em>birthday</em> · downtown Toronto · sun. june 7 2026
+  Field-tested by 4 Sonnet agents + Codex QA · CloakBrowser scrape + Reddit/blogTO UGC validation · Geocoded via OSM Nominatim · for one <em>birthday</em>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
-/* ───────── Data ───────── */
-const DO_NOW = [
-  {id:'chatime', t:'Download Societea (Chatime) + register bday + buy 1 drink', s:'7-day advance + qualifying purchase. Double-cap on signup AND prior purchase.', deadline:'May 31', link:'https://chatime.ca/rewards/'},
-  {id:'tenrens', t:'Ten Ren\'s Tea loyalty signup', s:'7-day advance rule. 454 Dundas St W (Chinatown).', deadline:'May 31', link:'https://tenrenstea.com/'},
-  {id:'sephora', t:'Sephora Beauty Insider signup', s:'Pick Dr. Dennis Gross Skin Spa Trio at the counter on June 7. ~$50 skincare value.', deadline:'Jun 01', link:'https://www.sephora.com/BeautyInsider'},
-  {id:'kiehls', t:'Kiehl\'s Rewards signup + plan small purchase', s:'Free Lip Balm #1 + skincare deluxe. New members need 1 small purchase ($15-20) during bday month to unlock.', deadline:'Jun 06', link:'https://www.kiehls.ca/en/my-kiehls-rewards.html'},
-  {id:'jollibee', t:'Download Jollibee Rewards app + add bday', s:'No hard cutoff but do it now to be safe. Free peach mango pie.', deadline:'Jun 06', link:'https://www.jollibeefoods.com/rewards'},
-  {id:'parisbaguette', t:'Paris Baguette CANADA app + 1 purchase', s:'NOT the US app — make sure it\'s the Canadian one. Needs 1 prior purchase before June 7.', deadline:'Jun 06', link:'https://parisbaguette.com/rewards/'},
-  {id:'alley', t:'The Alley app + buy 1 drink', s:'Needs 1 qualifying prior purchase. 5-day redemption window.', deadline:'Jun 06', link:'https://www.the-alley.ca/'},
-  {id:'tororo', t:'Toro Toro Rewards (TapMango) signup', s:'Locks redemption window June 1–14. 8-pc maki roll free, no group minimum.', deadline:'Jun 01', link:'https://www.torotoro.ca/'},
-  {id:'congcaphe', t:'Cong Caphe signup + DM 3 Elm St to confirm', s:'Stars loyalty is Bloor only per T&Cs — verify 3 Elm honours the bday drink before counting on it.', deadline:'Jun 01', link:'https://congcaphe.com/'},
-  {id:'monga', t:'Monga signup + call 692 Yonge', s:'Phone (647) 341-8838. April 2026 reports say bday offer may be discontinued at DT — confirm before walking in.', deadline:'Jun 06', link:'https://mongacanada.com/'},
-  {id:'keg', t:'Keg dinner reservation Sun Jun 7', s:'No signup needed for Billy Miner Pie — just tell server. But Sun dinner books up fast.', deadline:'Book now', link:'https://thekeg.com/en/locations'}
+const COORDS = {
+"paris-baguette":[43.6693,-79.3922],"toro-toro":[43.6689,-79.3859],"monga":[43.6677,-79.3859],
+"kiehls":[43.6541,-79.3808],"sephora":[43.6541,-79.3808],"jollibee":[43.6577,-79.3801],
+"cong-caphe":[43.6594,-79.3837],"ten-rens":[43.6543,-79.3997],"alley":[43.6498,-79.3830],
+"chatime":[43.6448,-79.3804],"ikkousha":[43.6484,-79.3933],"keg":[43.6465,-79.3747],
+"krispy":[43.6565,-79.3767],"timhortons":[43.6555,-79.3804],"burgers-priest":[43.6444,-79.3997],
+"red-lobster":[43.6563,-79.3816],"boston-pizza":[43.6444,-79.3875],"moxies":[43.6527,-79.3872],
+"what-a-bagel":[43.6475,-79.3963],"freshii":[43.6488,-79.3817],"impact-kitchen":[43.6444,-79.4004],
+"gyubee":[43.6551,-79.3858],"afuri":[43.6508,-79.3748],"trapped":[43.6494,-79.3951],
+"cineplex":[43.6486,-79.3914],"clinique":[43.6531,-79.3803],"wendys":[43.6563,-79.3805],
+"harveys":[43.6552,-79.3803],"nandos":[43.6712,-79.3845],"booster-juice":[43.6563,-79.3816],
+"kettlemans":[43.6433,-79.4032],"gong-cha":[43.6560,-79.3833],"starbucks":[43.6555,-79.3804],
+"gyu-kaku":[43.6516,-79.3749]
+};
+
+const DO_NOW_GROUPS = [
+  {title:'Today / by May 31', pill:'URGENT', pillClass:'pill-red',
+    desc:'Hard cutoffs. Skip these and the freebie is locked.',
+    items:[
+      {id:'red-lobster', t:'Red Lobster My Rewards signup', s:'10-day rule. Free app or dessert with 2 entrées — perfect duo dinner. Sign up at redlobster.ca.', deadline:'May 31', link:'https://www.redlobster.ca/'},
+      {id:'tim-hortons', t:'Tim Hortons app + 1 scan before May 31', s:'Sandwich + drink. Need 1 qualifying scan registered before signup deadline.', deadline:'May 31', link:'https://www.timhortons.ca/loyalty'},
+      {id:'chatime', t:'Societea app + register + 1 drink', s:'7-day advance + Oct 2025 update: needs qualifying annual purchase. Double cap.', deadline:'May 31', link:'https://chatime.ca/rewards/'},
+      {id:'tenrens', t:'Ten Ren\'s Tea loyalty signup', s:'7-day advance rule. 454 Dundas W Chinatown. Birthday day only.', deadline:'May 31', link:'https://tenrenstea.com/'},
+      {id:'booster-juice', t:'Booster Juice signup + 1 in-store purchase', s:'710ml smoothie unlock. Activates only after 1 prior purchase. Atrium 20 Dundas W.', deadline:'May 31', link:'https://www.boosterjuice.com/'},
+      {id:'krispy', t:'Krispy Kreme Rewards signup', s:'3 free Original Glazed, no purchase req. 30-day window. 4-week ideal lead but no hard cutoff in T&Cs.', deadline:'May 31', link:'https://www.krispykreme.ca/rewards'}
+    ]},
+  {title:'This week / by Jun 6', pill:'SOON', pillClass:'pill-gold',
+    desc:'Most reward apps need a couple days to register your birthday. Do not leave for the night before.',
+    items:[
+      {id:'sephora', t:'Sephora Beauty Insider signup', s:'Pick the Dr. Dennis Gross Skin Spa Trio at the counter (~$55 skincare value). No purchase required.', deadline:'Jun 01', link:'https://www.sephora.com/BeautyInsider'},
+      {id:'kiehls', t:'Kiehl\'s Rewards signup + plan small purchase', s:'Free Lip Balm #1 + deluxe skincare sample. New members need 1 purchase ($15-20) during bday month to unlock.', deadline:'Jun 06', link:'https://www.kiehls.ca/en/my-kiehls-rewards.html'},
+      {id:'clinique', t:'Clinique Smart Rewards signup', s:'Birthday gift = skincare (moisturizer/serum). Requires $45+ purchase. Bay/Bloor Holts or 220 Yonge Nordstrom.', deadline:'Jun 06', link:'https://www.clinique.ca/smart-rewards'},
+      {id:'jollibee', t:'Jollibee Rewards app + add bday', s:'Free peach mango pie. No hard cutoff but do now.', deadline:'Jun 06', link:'https://www.jollibeefoods.com/rewards'},
+      {id:'paris-baguette', t:'Paris Baguette CANADA app + 1 purchase', s:'NOT the US app. Free cake slice. Needs 1 prior purchase before June 7.', deadline:'Jun 06', link:'https://parisbaguette.com/rewards/'},
+      {id:'alley', t:'The Alley CA app + buy 1 drink', s:'Nōwn-powered loyalty. Needs 1 prior purchase. 5-day redemption window.', deadline:'Jun 06', link:'https://www.the-alley.ca/'},
+      {id:'tororo', t:'Toro Toro Rewards (TapMango)', s:'8-pc maki roll, June 1-14 window, no group min.', deadline:'Jun 01', link:'https://www.torotoro.ca/'},
+      {id:'boston-pizza', t:'MyBP app signup', s:'Free dessert, no group minimum. Loads 7 days out.', deadline:'Jun 01', link:'https://www.bostonpizza.com/'},
+      {id:'freshii', t:'Freshii ViiP signup', s:'Free customizable bowl (~$14). Valid entire June.', deadline:'Jun 06', link:'https://www.freshii.com/'},
+      {id:'impact', t:'Impact Kitchen app signup', s:'Free smoothie + bonus baked good. Multi DT locations open Sunday.', deadline:'Jun 06', link:'https://www.impactkitchen.com/'},
+      {id:'afuri', t:'Afuri Ramen Loyalty signup', s:'$10-15 off birthday-month meal. 411 Church St. Premium yuzu ramen.', deadline:'Jun 06', link:'https://afuriramen.com/'},
+      {id:'cineplex', t:'Cineplex Scene+ signup', s:'Free movie ticket bday month (~$18). Scotiabank 259 Richmond W or Varsity 55 Bloor W.', deadline:'Jun 06', link:'https://www.cineplex.com/loyalty/scene-plus'},
+      {id:'starbucks', t:'Starbucks Rewards signup + 1 transaction', s:'Free handcrafted drink/food (~$8). Need 1 prior star transaction + 7+ days membership.', deadline:'Jun 01', link:'https://www.starbucks.ca/rewards'},
+      {id:'burgers-priest', t:'Burger\'s Priest signup', s:'Free milkshake (~$8). 579 King W, late-night.', deadline:'Jun 06', link:'https://www.theburgerspriest.com/'},
+      {id:'harveys', t:'Harvey\'s rewards email signup', s:'Free pie. Email form, no app needed. Yonge/Dundas + PATH locations.', deadline:'Jun 06', link:'https://www.harveys.ca/'},
+      {id:'wendys', t:'Wendy\'s Rewards app', s:'Free Frosty with any purchase. Easy crawl filler.', deadline:'Jun 06', link:'https://order.wendys.com/'},
+      {id:'nandos', t:'Nando\'s PERi-Perks app + 1 visit', s:'Free Nata custard tart. Needs 1 qualifying purchase before June 1.', deadline:'Jun 01', link:'https://www.nandos.ca/'}
+    ]},
+  {title:'Day-of verifications', pill:'CALL FIRST', pillClass:'pill-mint',
+    desc:'These need a quick phone call or walk-in to lock down. No formal signup but real-world variability.',
+    items:[
+      {id:'trapped', t:'Trapped Escape Room — book a slot', s:'Birthday person free w/ government ID (±2 days). Book a 60-min room for June 7 — rooms fill on weekends. 336 Queen W.', deadline:'Book this week', link:'https://www.trappedescaperooms.com/'},
+      {id:'gyubee', t:'Gyubee — call to confirm party-of-2 OK', s:'Free AYCE Japanese BBQ + cake slice for birthday person. Some sources note 5-person min — call 157 Dundas W.', deadline:'Call by Jun 5', link:'https://www.gyubee.com/'},
+      {id:'cong-caphe-verify', t:'Cong Caphe — DM @congcaphe.ca to verify 3 Elm honors bday drink', s:'T&Cs say Bloor 424 location only. 3 Elm DT is unconfirmed.', deadline:'Verify before Jun 7', link:'https://www.instagram.com/congcaphe.ca/'},
+      {id:'monga-call', t:'Monga — call 647-341-8838', s:'Apr 2026 user reports say offer may be discontinued at 692 Yonge. Confirm before walking in.', deadline:'Call before Jun 7', link:'tel:+16473418838'},
+      {id:'keg-book', t:'The Keg dinner reservation', s:'Billy Miner Pie is server-discretion (no written policy). Call 35 Esplanade or 165 York and mention birthday at booking.', deadline:'Book this week', link:'https://thekeg.com/en/locations'},
+      {id:'what-a-bagel', t:'What A Bagel — bring photo ID', s:'Buy 6 get 6 free (12 bagels). No signup, no app — just ID at the counter. 130 Spadina. Sunday 8am-5pm.', deadline:'Day-of only', link:'https://www.whatabagel.com/'}
+    ]}
 ];
 
 const STOPS = [
-  {time:'10:30',name:'Paris Baguette',freebie:'Free cake slice',addr:'110 Bloor St W (Bay/Bloor)',maps:'https://maps.google.com/?q=Paris+Baguette+110+Bloor+W+Toronto',tier:'must',worth:4,
-   tc:['<b>Signup:</b> Paris Baguette <b>Canada</b> app (not US)','<b>Pre-req:</b> 1 prior purchase before redemption','<b>Window:</b> full birthday month','<b>Redeem:</b> in-app coupon at counter']},
-  {time:'11:00',name:'Toro Toro Sushi',freebie:'Free 8-piece maki roll',addr:'675 Yonge St (Yonge/Bloor)',maps:'https://maps.google.com/?q=Toro+Toro+Sushi+675+Yonge+Toronto',tier:'must',worth:5,
-   tc:['<b>Signup:</b> Toro Toro Rewards (TapMango)','<b>Window:</b> June 1–14','<b>No</b> group minimum (works for 2)','<b>Bring:</b> ID, TapMango account','<b>Dine-in</b>']},
-  {time:'11:45',name:'Monga Fried Chicken',freebie:'Free Baoger',addr:'692 Yonge St',maps:'https://maps.google.com/?q=Monga+Fried+Chicken+692+Yonge+Toronto',tier:'maybe',worth:3,
-   tc:['<b>Signup:</b> mongacanada.com rewards','<b>⚠️ Verify:</b> call 647-341-8838 — April 2026 reports say offer may be discontinued at DT','If dead, skip — walk south to Eaton Centre']},
-  {time:'12:45',name:'Kiehl\'s',freebie:'Free Lip Balm #1 + skincare sample',addr:'220 Yonge St Unit 3116A · CF Eaton Centre',maps:'https://maps.google.com/?q=Kiehls+Eaton+Centre+Toronto',tier:'must',worth:4,
-   tc:['<b>Signup:</b> My Kiehl\'s Rewards','<b>Catch:</b> new members need 1 small purchase ($15-20) during bday month','<b>Gift:</b> full-size Lip Balm #1 + deluxe sample (Midnight Recovery / Ultra Facial Cream)','100% skincare, no makeup']},
-  {time:'13:15',name:'Sephora',freebie:'Dr. Dennis Gross Skin Spa Trio',addr:'220 Yonge St · CF Eaton Centre',maps:'https://maps.google.com/?q=Sephora+Eaton+Centre+Toronto',tier:'must',worth:5,
-   tc:['<b>Signup:</b> Beauty Insider (free)','<b>No purchase required</b>','<b>2026 picks (skincare):</b> Dr. Dennis Gross Trio (~$50) or Tower 28 Duo','<b>Skip:</b> Dae haircare, Glossier fragrance options']},
-  {time:'13:45',name:'Jollibee',freebie:'Free peach mango pie',addr:'334 Yonge St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Jollibee+334+Yonge+Toronto',tier:'must',worth:4,
-   tc:['<b>Signup:</b> Jollibee Rewards app','<b>No purchase req</b>','<b>Confirmed:</b> 334 Yonge St location','Snack only — save room']},
-  {time:'14:15',name:'Cong Caphe',freebie:'Free Vietnamese coconut coffee',addr:'3 Elm St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Cong+Caphe+3+Elm+St+Toronto',tier:'maybe',worth:3,
-   tc:['<b>Signup:</b> congcaphe.ca','<b>⚠️ Catch:</b> Stars loyalty is Bloor St only per T&Cs','<b>Verify:</b> DM @congcaphe.ca to confirm 3 Elm honours bday drink','Great photo vibe if it works']},
-  {time:'15:00',name:'Ten Ren\'s Tea',freebie:'Free drink + 1 topping',addr:'454 Dundas St W (Chinatown, Spadina/Dundas)',maps:'https://maps.google.com/?q=Ten+Rens+Tea+454+Dundas+W+Toronto',tier:'must',worth:4,
-   tc:['<b>Signup:</b> Ten Ren\'s loyalty','<b>Window:</b> bday day only','<b>Any size + 1 topping</b>','<b>Bring:</b> ID']},
-  {time:'15:30',name:'The Alley',freebie:'Free bubble tea',addr:'120 Adelaide St W (also: 5 St Joseph, 65 Front W)',maps:'https://maps.google.com/?q=The+Alley+120+Adelaide+W+Toronto',tier:'must',worth:4,
-   tc:['<b>Signup:</b> The Alley CA app (Nōwn-powered)','<b>Pre-req:</b> 1 prior purchase','<b>Window:</b> 5-day redemption','Pick closest of 3 DT locations']},
-  {time:'16:15',name:'Chatime',freebie:'Free drink',addr:'Multiple DT (use Societea app finder)',maps:'https://maps.google.com/?q=Chatime+downtown+Toronto',tier:'must',worth:3,
-   tc:['<b>Signup:</b> Societea app','<b>Pre-req:</b> 1 qualifying purchase','<b>Window:</b> 7-day around bday','⚠️ Saturation tax — 4th boba of day. Skip if too full.']},
-  {time:'17:00',name:'Ikkousha — 29 GYOZA',freebie:'29 free gyoza (count = age)',addr:'249 Queen St W · or 374A Yonge St',maps:'https://maps.google.com/?q=Ikkousha+Ramen+Queen+West+Toronto',tier:'recruit',worth:5,
-   tc:['<b>⚠️ RECRUIT 2 FRIENDS</b> — needs 4 paying ramen orders','<b>Never repeats:</b> count = your age, only this year','<b>Dine-in</b> + ID required','Single best freebie of the entire list']},
-  {time:'19:00',name:'The Keg · dinner',freebie:'Billy Miner Pie (free dessert)',addr:'35 The Esplanade · or 165 York St',maps:'https://maps.google.com/?q=The+Keg+Esplanade+Toronto',tier:'dinner',worth:5,
-   tc:['<b>No signup required</b> — just tell server it\'s your bday','<b>Paid dinner</b> (~$70-100pp)','<b>Reservation strongly recommended</b> for Sunday','Birthday date-night anchor']}
+{time:'10:00',name:'Tim Hortons',freebie:'Free coffee/tea + breakfast item',addr:'277 Yonge St (or any DT)',maps:'https://maps.google.com/?q=Tim+Hortons+277+Yonge+Toronto',tier:'must',worth:3,coord:'timhortons',
+ tc:['<b>Signup:</b> Tim Hortons Rewards app','<b>Pre-req:</b> 1 qualifying scan + signed up by May 31','<b>Window:</b> entire June','Easy first stop, caffeine boost']},
+{time:'10:30',name:'Paris Baguette',freebie:'Free cake slice',addr:'110 Bloor St W (Bay/Bloor)',maps:'https://maps.google.com/?q=Paris+Baguette+110+Bloor+W+Toronto',tier:'must',worth:4,coord:'paris-baguette',
+ tc:['<b>Signup:</b> Paris Baguette CANADA app (not US)','<b>Pre-req:</b> 1 prior purchase before redemption','<b>Window:</b> full birthday month','Pair w/ coffee']},
+{time:'11:00',name:'Toro Toro Sushi',freebie:'Free 8-piece maki roll',addr:'675 Yonge St (Yonge/Bloor)',maps:'https://maps.google.com/?q=Toro+Toro+Sushi+675+Yonge+Toronto',tier:'must',worth:5,coord:'toro-toro',
+ tc:['<b>Signup:</b> Toro Toro Rewards (TapMango)','<b>Window:</b> June 1–14','<b>No</b> group minimum','<b>Bring:</b> ID, TapMango account','Dine-in only']},
+{time:'11:30',name:'Monga Fried Chicken',freebie:'Free Baoger',addr:'692 Yonge St',maps:'https://maps.google.com/?q=Monga+Fried+Chicken+692+Yonge+Toronto',tier:'maybe',worth:3,coord:'monga',
+ tc:['<b>Signup:</b> mongacanada.com rewards','<b>⚠️ VERIFY:</b> call 647-341-8838 — April 2026 reports say offer may be discontinued at DT','If dead, walk south to Eaton Centre']},
+
+{time:'12:30',name:'Kiehl\'s',freebie:'Lip Balm #1 + skincare deluxe sample',addr:'220 Yonge St Unit 3116A · CF Eaton Centre',maps:'https://maps.google.com/?q=Kiehls+Eaton+Centre+Toronto',tier:'must',worth:4,coord:'kiehls',
+ tc:['<b>Signup:</b> My Kiehl\'s Rewards','<b>Catch:</b> new members need 1 small purchase ($15-20) during bday month','<b>Gift:</b> Lip Balm #1 + Midnight Recovery / Ultra Facial sample','100% skincare']},
+{time:'12:50',name:'Sephora',freebie:'Dr. Dennis Gross Skin Spa Trio',addr:'220 Yonge St · CF Eaton Centre',maps:'https://maps.google.com/?q=Sephora+Eaton+Centre+Toronto',tier:'must',worth:5,coord:'sephora',
+ tc:['<b>Signup:</b> Beauty Insider (free)','<b>No purchase required</b>','<b>2026 skincare picks:</b> Dr. Dennis Gross Trio (~$55) or Tower 28 Duo','Skip the Dae haircare + Glossier fragrance options']},
+{time:'13:10',name:'Clinique',freebie:'Skincare birthday gift',addr:'220 Yonge St · Nordstrom TEC',maps:'https://maps.google.com/?q=Clinique+Nordstrom+Eaton+Centre+Toronto',tier:'must',worth:4,coord:'clinique',
+ tc:['<b>Signup:</b> Smart Rewards (free)','<b>Pre-req:</b> $45+ purchase','<b>Gift:</b> moisturizer/serum (skincare confirmed)','Valid 30 days']},
+
+{time:'13:40',name:'Krispy Kreme',freebie:'3 Original Glazed donuts',addr:'105 Dundas St E (Dundas Square)',maps:'https://maps.google.com/?q=Krispy+Kreme+105+Dundas+E+Toronto',tier:'must',worth:4,coord:'krispy',
+ tc:['<b>Signup:</b> Krispy Kreme Rewards','<b>No purchase required</b>','<b>Window:</b> 30 days post-bday','Walking distance from Eaton Centre']},
+{time:'14:00',name:'Jollibee',freebie:'Free peach mango pie',addr:'334 Yonge St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Jollibee+334+Yonge+Toronto',tier:'must',worth:4,coord:'jollibee',
+ tc:['<b>Signup:</b> Jollibee Rewards app','<b>No purchase req</b>','Snack only — save room']},
+{time:'14:30',name:'Cong Caphe',freebie:'Free Vietnamese coconut coffee',addr:'3 Elm St (Yonge/Dundas)',maps:'https://maps.google.com/?q=Cong+Caphe+3+Elm+St+Toronto',tier:'maybe',worth:3,coord:'cong-caphe',
+ tc:['<b>Signup:</b> congcaphe.ca','<b>⚠️ T&Cs say Bloor 424 only</b> — DM @congcaphe.ca to verify 3 Elm','Great photo vibe if it works']},
+{time:'15:00',name:'Ten Ren\'s Tea',freebie:'Free drink + 1 topping',addr:'454 Dundas St W (Chinatown)',maps:'https://maps.google.com/?q=Ten+Rens+Tea+454+Dundas+W+Toronto',tier:'must',worth:4,coord:'ten-rens',
+ tc:['<b>Signup:</b> Ten Ren\'s loyalty','<b>Window:</b> bday day only','Any size + 1 topping']},
+{time:'15:20',name:'Gyubee Japanese BBQ',freebie:'Free AYCE Japanese BBQ + cake',addr:'157 Dundas St W (Chinatown)',maps:'https://maps.google.com/?q=Gyubee+157+Dundas+W+Toronto',tier:'recruit',worth:5,coord:'gyubee',
+ tc:['<b>⚠️ CALL TO CONFIRM</b> party-of-2 (some sources note 5-person min)','<b>Bring:</b> government ID','<b>Value:</b> ~$45-50 free','<b>Walk-in or reserve</b>','Time it — AYCE needs 90 min']},
+
+{time:'17:00',name:'Trapped Escape Room',freebie:'Free escape room (birthday person)',addr:'336 Queen St W (Queen/Spadina)',maps:'https://maps.google.com/?q=Trapped+Escape+Room+336+Queen+W+Toronto',tier:'bonus',worth:5,coord:'trapped',
+ tc:['<b>Window:</b> ±2 days from bday (June 5-9 OK)','<b>Bring:</b> government ID','<b>GF pays</b> ~$30 normal rate','<b>BOOK NOW</b> — Sunday rooms fill','Best date-night activation']},
+{time:'18:00',name:'The Alley',freebie:'Free bubble tea',addr:'120 Adelaide St W (also: 5 St Joseph, 65 Front W)',maps:'https://maps.google.com/?q=The+Alley+120+Adelaide+W+Toronto',tier:'must',worth:4,coord:'alley',
+ tc:['<b>Signup:</b> The Alley CA app','<b>Pre-req:</b> 1 prior purchase','<b>Window:</b> 5-day redemption']},
+{time:'18:30',name:'Chatime',freebie:'Free drink',addr:'Multiple DT (use Societea app)',maps:'https://maps.google.com/?q=Chatime+downtown+Toronto',tier:'must',worth:3,coord:'chatime',
+ tc:['<b>Signup:</b> Societea app','<b>Pre-req:</b> 1 qualifying annual purchase (Oct 2025 policy)','<b>Window:</b> 7-day around bday','⚠️ Saturation tax — skip if too full']},
+
+{time:'19:00',name:'Red Lobster · dinner',freebie:'Free appetizer or dessert',addr:'20 Dundas St W (Yonge/Dundas)',maps:'https://maps.google.com/?q=Red+Lobster+20+Dundas+W+Toronto',tier:'dinner',worth:4,coord:'red-lobster',
+ tc:['<b>Signup:</b> My Red Lobster Rewards','<b>Pre-req:</b> 2 adult entrées (= you + GF)','Reward in-app after signup','Best central duo dinner']},
+{time:'19:00',name:'The Keg · dinner',freebie:'Billy Miner Pie (free dessert)',addr:'35 The Esplanade · or 165 York St',maps:'https://maps.google.com/?q=The+Keg+Esplanade+Toronto',tier:'dinner',worth:5,coord:'keg',
+ tc:['<b>Server discretion</b> — no written policy. Mention at booking.','<b>Paid dinner</b> (~$75-100pp)','<b>Reservation strongly recommended</b>','Most cinematic date-night choice']},
+{time:'19:00',name:'Boston Pizza · dinner',freebie:'Free dessert',addr:'250 Front St W',maps:'https://maps.google.com/?q=Boston+Pizza+250+Front+W+Toronto',tier:'dinner',worth:3,coord:'boston-pizza',
+ tc:['<b>Signup:</b> MyBP app','<b>No group minimum</b>','Most casual dinner option']},
+{time:'19:00',name:'Moxies · dinner',freebie:'Free dessert',addr:'70 University Ave',maps:'https://maps.google.com/?q=Moxies+70+University+Toronto',tier:'dinner',worth:3,coord:'moxies',
+ tc:['<b>No signup required</b> — tell server','<b>No group minimum</b>','Zero-prep alternative']},
+
+{time:'21:00',name:'Ikkousha · 29 GYOZA',freebie:'29 gyoza (count = age)',addr:'249 Queen St W',maps:'https://maps.google.com/?q=Ikkousha+Ramen+Queen+West+Toronto',tier:'recruit',worth:5,coord:'ikkousha',
+ tc:['<b>⚠️ NEEDS 4 PAYING RAMEN orders</b> — recruit 2 friends','<b>Never repeats:</b> count = age','<b>Dine-in</b> + ID required','Single best freebie of the list']},
+{time:'21:30',name:'Cineplex movie',freebie:'Free movie ticket',addr:'259 Richmond St W · Scotiabank Theatre',maps:'https://maps.google.com/?q=Cineplex+Scotiabank+Toronto',tier:'bonus',worth:4,coord:'cineplex',
+ tc:['<b>Scene+ membership</b> (free)','<b>Window:</b> entire birthday month','<b>Value:</b> ~$18','Cap the night']},
+{time:'22:30',name:'Burger\'s Priest',freebie:'Free milkshake',addr:'579 King St W',maps:'https://maps.google.com/?q=Burgers+Priest+579+King+W+Toronto',tier:'bonus',worth:3,coord:'burgers-priest',
+ tc:['<b>Signup:</b> Burger\'s Priest rewards','<b>Open late</b> — verify Sunday hours','Late-night sugar finisher']},
+
+{time:'+filler',name:'What A Bagel',freebie:'Buy 6 get 6 (12 bagels)',addr:'130 Spadina Ave',maps:'https://maps.google.com/?q=What+A+Bagel+130+Spadina+Toronto',tier:'maybe',worth:4,coord:'what-a-bagel',
+ tc:['<b>No signup</b> — just photo ID','<b>Catch:</b> need to buy 6 first (~$8)','<b>Sunday hours:</b> 8am-5pm','Take home for the week']},
+{time:'+filler',name:'Freshii',freebie:'Free customizable bowl',addr:'100 King St W (and other DT)',maps:'https://maps.google.com/?q=Freshii+100+King+W+Toronto',tier:'maybe',worth:3,coord:'freshii',
+ tc:['<b>Signup:</b> ViiP app','<b>Window:</b> entire June','<b>Value:</b> ~$14','Healthy reset']},
+{time:'+filler',name:'Impact Kitchen',freebie:'Free smoothie + bonus baked good',addr:'117 King St W (also: Harbourfront, Bay)',maps:'https://maps.google.com/?q=Impact+Kitchen+King+W+Toronto',tier:'maybe',worth:3,coord:'impact-kitchen',
+ tc:['<b>Signup:</b> Impact app','<b>No purchase req</b>','Multi DT, Sunday-open']},
+{time:'+filler',name:'Afuri Ramen',freebie:'$10-15 off bday month',addr:'411 Church St',maps:'https://maps.google.com/?q=Afuri+Ramen+411+Church+Toronto',tier:'maybe',worth:3,coord:'afuri',
+ tc:['<b>Signup:</b> Afuri Loyalty','<b>Premium yuzu shio ramen</b>','Discount not freebie — but ~$15 off']},
+{time:'+filler',name:'Starbucks',freebie:'Free handcrafted drink/food',addr:'277 Yonge St (and dozens DT)',maps:'https://maps.google.com/?q=Starbucks+277+Yonge+Toronto',tier:'maybe',worth:3,coord:'starbucks',
+ tc:['<b>Signup:</b> Starbucks Rewards (Green)','<b>Pre-req:</b> 1 prior star transaction + 7+ days member','<b>Window:</b> bday day only (Green tier)','Coffee replacement']},
+{time:'+filler',name:'Wendy\'s',freebie:'Free Frosty',addr:'248 Yonge St (and multi DT)',maps:'https://maps.google.com/?q=Wendys+Yonge+Toronto',tier:'maybe',worth:2,coord:'wendys',
+ tc:['<b>Signup:</b> Wendy\'s Rewards app','<b>Catch:</b> requires any purchase to redeem','Easy add-on']},
+{time:'+filler',name:'Harvey\'s',freebie:'Free pie',addr:'263 Yonge St',maps:'https://maps.google.com/?q=Harveys+263+Yonge+Toronto',tier:'maybe',worth:2,coord:'harveys',
+ tc:['<b>Signup:</b> email rewards (no app)','Easy snack stop']},
+{time:'+filler',name:'Nando\'s',freebie:'Free Nata custard tart',addr:'14 Bloor St E',maps:'https://maps.google.com/?q=Nandos+14+Bloor+E+Toronto',tier:'maybe',worth:3,coord:'nandos',
+ tc:['<b>Signup:</b> PERi-Perks app','<b>Pre-req:</b> 1 qualifying purchase in last 6 months','Could double as light dinner']},
+{time:'+filler',name:'Booster Juice',freebie:'Free 710ml smoothie',addr:'20 Dundas W (Atrium)',maps:'https://maps.google.com/?q=Booster+Juice+20+Dundas+W+Toronto',tier:'maybe',worth:3,coord:'booster-juice',
+ tc:['<b>Signup:</b> Booster Juice app','<b>Pre-req:</b> 1 in-app purchase','Verify Sunday hours']},
+{time:'+filler',name:'Kettlemans Bagel',freebie:'6 free Montreal-style bagels',addr:'33 Bathurst St (24/7)',maps:'https://maps.google.com/?q=Kettlemans+33+Bathurst+Toronto',tier:'maybe',worth:3,coord:'kettlemans',
+ tc:['<b>Signup:</b> Kettlemans app','<b>14-day window passed</b> May 23 — try anyway','<b>24/7</b> location','Take home']},
+{time:'+filler',name:'Gong Cha',freebie:'Free drink or $5 off',addr:'595 Bay St (and multi DT)',maps:'https://maps.google.com/?q=Gong+Cha+Bay+Dundas+Toronto',tier:'maybe',worth:2,coord:'gong-cha',
+ tc:['<b>Signup:</b> Gong Cha Rewards (TapMango)','<b>Program rebuilt</b> Aug 2023 — verify active','Medium-confidence']},
+{time:'+filler',name:'Gyu-Kaku',freebie:'Free ice cream + candle (call ahead)',addr:'81 Church St',maps:'https://maps.google.com/?q=Gyu+Kaku+81+Church+Toronto',tier:'maybe',worth:3,coord:'gyu-kaku',
+ tc:['<b>Staff discretion</b> — no formal program','<b>Call day before</b>','Backup KBBQ option']}
 ];
 
 const CLUSTERS = [
-  {name:'Yonge / <em>Bloor</em>', time:'10:30 – 12:30',
-   stops:[['Paris Baguette','110 Bloor W'],['Toro Toro Sushi','675 Yonge'],['Monga F. Chicken','692 Yonge']]},
-  {name:'Eaton <em>Centre</em>', time:'12:45 – 13:45',
-   stops:[['Kiehl\'s','220 Yonge u.3116A'],['Sephora','220 Yonge'],['Jollibee','334 Yonge']]},
-  {name:'Yonge / <em>Dundas</em>', time:'14:00 – 14:30',
-   stops:[['Cong Caphe','3 Elm St']]},
-  {name:'Chinatown / <em>Queen W</em>', time:'15:00 – 17:30',
-   stops:[['Ten Ren\'s Tea','454 Dundas W'],['The Alley','120 Adelaide W'],['Chatime','Multiple DT'],['Ikkousha (recruit)','249 Queen W']]},
-  {name:'Financial / <em>Esplanade</em>', time:'19:00 – late',
-   stops:[['The Keg dinner','35 Esplanade / 165 York']]}
+  {name:'Yonge / <em>Bloor</em>', time:'10:30 – 12:00',
+   stops:[['Paris Baguette','110 Bloor W'],['Toro Toro Sushi','675 Yonge'],['Monga F. Chicken','692 Yonge'],['Nando\'s','14 Bloor E']]},
+  {name:'Eaton <em>Centre</em>', time:'12:30 – 14:30',
+   stops:[['Kiehl\'s','220 Yonge u.3116A'],['Sephora','220 Yonge'],['Clinique','220 Yonge Nordstrom'],['Krispy Kreme','105 Dundas E'],['Jollibee','334 Yonge'],['Harvey\'s','263 Yonge'],['Wendy\'s','248 Yonge'],['Red Lobster','20 Dundas W'],['Booster Juice','20 Dundas W']]},
+  {name:'Chinatown / <em>Queen W</em>', time:'14:30 – 18:00',
+   stops:[['Cong Caphe','3 Elm St'],['Ten Ren\'s Tea','454 Dundas W'],['Gyubee','157 Dundas W'],['Trapped','336 Queen W'],['Ikkousha (recruit)','249 Queen W'],['What A Bagel','130 Spadina']]},
+  {name:'Financial / <em>Front</em>', time:'18:30 – late',
+   stops:[['The Alley','120 Adelaide W'],['Chatime','65 Front W'],['The Keg dinner','35 Esplanade'],['Afuri Ramen','411 Church'],['Boston Pizza','250 Front W'],['Moxies','70 University'],['Cineplex','259 Richmond W'],['Burger\'s Priest','579 King W']]}
 ];
 
 const SKIP = [
   ['Flame Sushi','6-person minimum','UNFEASIBLE'],
   ['Mandarin Restaurant','DT location closed Jan 2026 + 3 adult min','CLOSED'],
-  ['CopaCabana','230 Adelaide closed Apr 2026, 4-person min uptown','CLOSED'],
-  ['Gourmet Tribe','Markham only (40 min from DT)','SUBURBAN'],
+  ['CopaCabana','230 Adelaide closed Apr 2026, 4-person min, bday-exact-date only','CLOSED'],
+  ['Gourmet Tribe','Markham only — 40 min from DT','SUBURBAN'],
   ['Big Mama\'s & Papa\'s','No Toronto — Milton only','SUBURBAN'],
   ['Daan Go Cake Lab','Advance signup window missed (needed May 7)','MISSED'],
-  ['Sukoshi Mart','31-day signup window missed (unless already member)','MISSED'],
-  ['Marry Me Mochi','No real bday freebie — Fivestars points-based','NO PROGRAM'],
-  ['Mr. Puffs','No DT location (Stockyards / North York only)','NO DT'],
-  ['Daldongnae','No verified bday program — but great dinner alt @ 361 Yonge','NO PROGRAM']
+  ['Sukoshi Mart','31-day signup window missed','MISSED'],
+  ['Marry Me Mochi','No real bday freebie — Fivestars points based','NO PROGRAM'],
+  ['Mr. Puffs','No DT location — Stockyards / North York','NO DT'],
+  ['Daldongnae','No verified bday program — but solid alt KBBQ @ 361 Yonge','NO PROGRAM'],
+  ['MAC Cosmetics','Need Silver $150/yr + makeup-only gifts','NOT SKINCARE'],
+  ['Crumbl','Need 500 Crumbs (~$50 prior spend) for new accounts','SPEND WALL'],
+  ['New York Fries','Needs $50 prior-year spend to unlock','SPEND WALL'],
+  ['Edible Arrangements','Needs $30+ prior purchase in 2025','SPEND WALL'],
+  ['Subway','$1.50 cookie only — not worth the detour','LOW VALUE'],
+  ['Quiznos','BOGO not freebie + thin DT presence','PARTIAL OFFER'],
+  ['Cobs Bread','Only Annex (370 Bloor W) — off route','OFF ROUTE'],
+  ['Swiss Chalet','Waterfront only (266 Queens Quay W) — off route','OFF ROUTE'],
+  ['Village Juicery','Closed Sundays (PATH location)','CLOSED SUN'],
+  ['Jugo Juice','$3 off not free','PARTIAL OFFER'],
+  ['Night Baker','825 College — west of route','OFF ROUTE'],
+  ['Kelsey\'s','Low-excitement dessert + DT presence thin','LOW VALUE'],
+  ['Benihana','Permanently closed Feb 2026','CLOSED'],
+  ['Chipotle','US-only program — invalid in Canada','NOT VALID CA'],
+  ['Denny\'s DT','Dundas St location specifically excluded from CA program','EXCLUDED'],
+  ['Indigo Plum','20% off, not freebie — skip unless near 55 Bloor W','PARTIAL OFFER'],
+  ['A&W','Mug Club Root Beer Float — most UGC is US, CA program unverified','UNCONFIRMED CA']
 ];
 
-/* ───────── Render ───────── */
 const $ = s => document.querySelector(s);
-const store = JSON.parse(localStorage.getItem('crawl26')||'{"done":[],"redeem":[]}');
-const save = () => localStorage.setItem('crawl26', JSON.stringify(store));
+const store = JSON.parse(localStorage.getItem('crawl26v2')||'{"done":[],"redeem":[]}');
+const save = () => localStorage.setItem('crawl26v2', JSON.stringify(store));
+
+function totalDoNow(){ return DO_NOW_GROUPS.reduce((n,g)=>n+g.items.length,0); }
 
 function renderDoNow(){
-  const html = DO_NOW.map(d=>{
-    const done = store.done.includes(d.id);
-    return `<div class="donow ${done?'done':''}" data-id="${d.id}">
-      <div class="check">${done?'✓':''}</div>
-      <div>
-        <div class="donow-title">${d.t}</div>
-        <div class="donow-sub">${d.s}</div>
+  const html = DO_NOW_GROUPS.map(g => `
+    <div class="urgency-section">
+      <h3>${g.title} <span class="pill ${g.pillClass}">${g.pill}</span></h3>
+      <div class="desc">${g.desc}</div>
+      <div class="donow-list">
+        ${g.items.map(d=>{
+          const done = store.done.includes(d.id);
+          return `<div class="donow ${done?'done':''}" data-id="${d.id}">
+            <div class="check">${done?'✓':''}</div>
+            <div>
+              <div class="donow-title">${d.t}</div>
+              <div class="donow-sub">${d.s}</div>
+            </div>
+            <div class="donow-meta">
+              <div class="deadline">${d.deadline}</div>
+              <a href="${d.link}" target="_blank" rel="noopener">open ↗</a>
+            </div>
+          </div>`;
+        }).join('')}
       </div>
-      <div class="donow-meta">
-        <div class="deadline">${d.deadline}</div>
-        <a href="${d.link}" target="_blank" rel="noopener">open ↗</a>
-      </div>
-    </div>`;
-  }).join('');
-  $('#donow-list').innerHTML = html;
+    </div>`).join('');
+  $('#donow-render').innerHTML = html;
   document.querySelectorAll('.donow').forEach(el=>{
     el.addEventListener('click', e=>{
       if(e.target.tagName==='A') return;
@@ -644,17 +634,19 @@ function renderDoNow(){
     });
   });
 }
+
 function updateProgress(){
-  const n = store.done.length, total = DO_NOW.length;
-  const pct = Math.round(n/total*100);
+  const n = store.done.length, total = totalDoNow();
+  const pct = total ? Math.round(n/total*100) : 0;
   $('#pbar').style.width = pct + '%';
   $('#pct').textContent = pct + '%';
   $('#todo-count2').textContent = `${n} of ${total}`;
   $('#todo-counter').textContent = `${n} / ${total}`;
 }
 
+let activeFilter='all';
 function renderStops(filter='all'){
-  const html = STOPS.filter(s=>filter==='all'||s.tier===filter).map((s,i)=>{
+  const html = STOPS.filter(s=>filter==='all'||s.tier===filter).map(s=>{
     const redeemed = store.redeem.includes(s.name);
     const dots = Array.from({length:5}).map((_,k)=>`<span class="${k<s.worth?'on':''}"></span>`).join('');
     return `<article class="stop ${redeemed?'redeemed':''}" data-name="${s.name}" data-tier="${s.tier}">
@@ -685,7 +677,7 @@ function renderStops(filter='all'){
     });
   });
 }
-let activeFilter='all';
+
 document.querySelectorAll('.chip').forEach(c=>{
   c.addEventListener('click', ()=>{
     document.querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed','false'));
@@ -708,18 +700,45 @@ function renderSkip(){
     <div class="skip-row"><b>${s[0]}</b><span>${s[1]}</span><em>${s[2]}</em></div>`).join('');
 }
 
-/* ───────── Tabs ───────── */
+const TIER_COLOR = {must:'#D43A2F', maybe:'#C99845', recruit:'#3F7A5E', dinner:'#141414', bonus:'#7A4FB5'};
+let leafMap, mapInited=false;
+function initMap(){
+  if(mapInited) return; mapInited=true;
+  leafMap = L.map('leaf',{scrollWheelZoom:false}).setView([43.6535,-79.385], 14);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'© OpenStreetMap', maxZoom:19
+  }).addTo(leafMap);
+  const seen = new Set();
+  STOPS.forEach(s => {
+    const c = COORDS[s.coord]; if(!c) return;
+    let lat = c[0], lng = c[1];
+    const key = lat+','+lng;
+    if (seen.has(key)) { lat += (Math.random()-0.5)*0.0014; lng += (Math.random()-0.5)*0.0014; }
+    seen.add(key);
+    const color = TIER_COLOR[s.tier] || '#141414';
+    const icon = L.divIcon({
+      className:'cm-pin',
+      iconSize:[22,22], iconAnchor:[11,11],
+      html:`<div style="width:22px;height:22px;border-radius:50%;background:${color};border:2.5px solid #141414;box-shadow:0 2px 4px rgba(0,0,0,.3)"></div>`
+    });
+    L.marker([lat,lng],{icon}).addTo(leafMap).bindPopup(
+      `<b>${s.name}</b><em>${s.freebie}</em><br/>${s.addr}<br/><a href="${s.maps}" target="_blank" rel="noopener">Open in Maps ↗</a>`
+    );
+  });
+  setTimeout(()=>leafMap.invalidateSize(), 250);
+}
+
 document.querySelectorAll('.tab').forEach(t=>{
   t.addEventListener('click', ()=>{
     document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected','false'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     t.setAttribute('aria-selected','true');
     document.getElementById(t.dataset.target).classList.add('active');
+    if(t.dataset.target==='map'){ initMap(); setTimeout(()=>leafMap && leafMap.invalidateSize(), 100); }
     window.scrollTo({top:0,behavior:'smooth'});
   });
 });
 
-/* ───────── Countdown ───────── */
 function pad(n){return String(n).padStart(2,'0')}
 function fmt(ms){
   if(ms<0) return 'PASSED';
@@ -730,13 +749,12 @@ function fmt(ms){
 function tick(){
   const now = new Date();
   const signup = new Date('2026-05-31T23:59:59-04:00');
-  const crawl = new Date('2026-06-07T10:30:00-04:00');
+  const crawl = new Date('2026-06-07T10:00:00-04:00');
   $('#cd-signup').textContent = fmt(signup-now);
   $('#cd-crawl').textContent  = fmt(crawl-now);
 }
 setInterval(tick, 60000); tick();
 
-/* ───────── Reset ───────── */
 $('#reset-btn').addEventListener('click', e=>{
   e.preventDefault();
   if(confirm('Clear all checkmarks?')){
@@ -745,7 +763,6 @@ $('#reset-btn').addEventListener('click', e=>{
   }
 });
 
-/* ───────── Boot ───────── */
 renderDoNow(); renderStops(); renderClusters(); renderSkip(); updateProgress();
 </script>
 </body>
